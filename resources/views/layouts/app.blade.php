@@ -151,6 +151,22 @@
 
             <div class="space-y-2 mb-8">
 
+                <!-- STAFF -->
+                @if(auth()->user()->role == 'admin')
+
+                <a href="{{ route('staff.index') }}"
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cyan-500 transition">
+
+                    <span>👨‍💼</span>
+
+                    <span>
+                        Staff
+                    </span>
+
+                </a>
+
+                @endif
+
                 <!-- TENANTS -->
                 <a href="{{ route('tenants.index') }}"
                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cyan-500 transition">
@@ -284,4 +300,4 @@
 </div>
 
 </body>
-</html> 
+</html>
