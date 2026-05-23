@@ -67,6 +67,7 @@
 
             <div class="space-y-2 mb-8">
 
+                <!-- DASHBOARD -->
                 <a href="{{ auth()->user()->role == 'admin'
                             ? route('dashboard')
                             : route('staff.dashboard') }}"
@@ -80,6 +81,7 @@
 
                 </a>
 
+                <!-- REPORTS -->
                 @if(auth()->user()->role == 'admin')
 
                 <a href="{{ route('reports.index') }}"
@@ -104,6 +106,19 @@
 
             <div class="space-y-2 mb-8">
 
+                <!-- BRANCHES -->
+                <a href="{{ route('branches.index') }}"
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cyan-500 transition">
+
+                    <span>🏬</span>
+
+                    <span>
+                        Branches
+                    </span>
+
+                </a>
+
+                <!-- OWNERS -->
                 <a href="{{ route('owners.index') }}"
                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cyan-500 transition">
 
@@ -115,6 +130,7 @@
 
                 </a>
 
+                <!-- PROPERTIES -->
                 <a href="{{ route('properties.index') }}"
                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cyan-500 transition">
 
@@ -135,6 +151,7 @@
 
             <div class="space-y-2 mb-8">
 
+                <!-- TENANTS -->
                 <a href="{{ route('tenants.index') }}"
                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cyan-500 transition">
 
@@ -155,6 +172,7 @@
 
             <div class="space-y-2">
 
+                <!-- PAYMENTS -->
                 <a href="{{ route('payments.index') }}"
                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cyan-500 transition">
 
@@ -266,4 +284,4 @@
 </div>
 
 </body>
-</html>
+</html> 

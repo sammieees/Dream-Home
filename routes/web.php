@@ -8,6 +8,7 @@ use App\Http\Controllers\TenantController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\BranchController;
 
 use App\Models\Property;
 use App\Models\Payment;
@@ -119,6 +120,14 @@ Route::middleware('auth')->group(function () {
     */
 
     Route::resource('owners', OwnerController::class);
+
+    /*
+    |--------------------------------------------------------------------------
+    | BRANCHES
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource('branches', BranchController::class);
 
     /*
     |--------------------------------------------------------------------------

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Tenant;
 use App\Models\Owner;
+use App\Models\Branch;
 
 class Property extends Model
 {
@@ -35,5 +36,11 @@ class Property extends Model
     public function owner()
     {
         return $this->belongsTo(Owner::class);
+    }
+
+    
+    public function branch()
+    {
+    return $this->belongsTo(Branch::class);
     }
 }
