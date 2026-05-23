@@ -1,59 +1,303 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# DreamHome Property Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Project Description
 
-## About Laravel
+DreamHome is a web-based property management system that helps organize rental operations such as managing property owners, properties, tenants, staff, leases, and payments. It features a structured dashboard with role-based access control, allowing users to perform tasks efficiently while ensuring secure and organized management of rental data. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Team Members
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Name | Role | Module |
+|---|---|---|
+| Samantha Nicole E. Bogo | Project Controller / Developer | Module 2 - Client & Registration |
+| Rishalenn Q. Pelarija | Developer | Module 1 - Property & Owner Management |
+| Samantha S. Calunsag | Developer | Module 3 - Staff & Branch Management |
+| Ian Kent Bris | Developer | Module 4 - Rental & Viewing Management |
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Tech Stack
 
-## Laravel Sponsors
+- Laravel 13.x
+- PHP 8.5
+- Xampp MySQL (Local) / Railway MySQL (Production)
+- Railway (Deployment)
+- Tailwind CSS
+- Vite
+- GitHub
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## Repository Link
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```txt
+https://github.com/digangjaysonrey123/dreamhome
+```
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Setup Instructions
 
-## Code of Conduct
+### Clone Repository
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+git clone https://github.com/sammieees/Dream-Home.git
+cd dreamhome
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Install Dependencies
 
-## License
+```bash
+composer install
+npm install
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+### Configure Environment
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Update `.env` with your database credentials:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=DreamHome
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+---
+
+### Import Database
+
+1. Open MySQL Workbench or phpMyAdmin
+2. Create a database called `DreamHome`
+3. Run the SQL script provided in the repository
+4. The script includes all tables, sample data, and triggers
+
+---
+
+### Run Database Migration
+
+```bash
+php artisan migrate
+```
+
+---
+
+### Start Development Server
+
+Open two terminals:
+
+```bash
+# Terminal 1
+npm run dev
+
+# Terminal 2
+php artisan serve
+```
+
+Then open your browser at:
+
+```txt
+http://127.0.0.1:8000
+```
+
+---
+
+## Default Login
+
+### Admin Account
+
+```txt
+Email:    nicole@gmail.com
+Password: password123
+```
+
+---
+
+## Database Information
+
+### Database Platform
+
+```txt
+Local:      XAMPP MySQL
+Production: Railway MySQL
+```
+
+---
+
+### Main Tables
+
+| Table | Purpose |
+|---|---|
+| Branch | Stores branch office details |
+| Staff | Stores staff information and roles |
+| NextOfKin | Stores next of kin details for staff |
+| PropertyForRent | Stores property listings |
+| Renter | Stores client/renter information |
+| Lease | Stores lease agreements |
+| Inspection | Stores property inspection records |
+| Newspaper | Stores newspaper names for adverts |
+| Advert | Stores property advertisements |
+| Viewing | Stores property viewing records |
+| Payment | Stores payment records |
+| users | Stores system login accounts and roles |
+
+---
+
+### Database Triggers
+
+| Trigger | Purpose |
+|---|---|
+| prevent_lease_delete | Prevents deletion of lease records within 3 years of expiry |
+| prevent_property_delete | Prevents deletion of property records within 3 years of withdrawal |
+
+
+---
+
+## Role-Based Access Control
+
+| Role | Access Level |
+|---|---|
+| Admin | Full access to all modules + User Management |
+| Staff | Properties, Clients, Rentals, Payments |
+
+
+---
+
+## Module Assignment
+
+| Module | Description | Assigned Developer |
+|---|---|---|
+| Module 1 | Property & Owner Management | Ricky Mark S. Pareja |
+| Module 2 | Client & Registration | Jayson Rey Digang |
+| Module 3 | Staff & Branch Management | Chien Maureen M. Enot |
+| Module 4 | Rental & Viewing Management | Sirelle Timothy Mayon |
+
+
+---
+
+## Deployment Information
+
+### Live URL
+
+```txt
+https://dreamhome-production.up.railway.app
+```
+
+---
+
+### Hosting Platform
+
+```txt
+Railway - https://railway.appi
+```
+
+---
+
+## Screenshots
+
+### Login Page
+
+![Login Page](Screenshots/login.png)
+
+---
+
+### Dashboard
+
+![Dashboard](Screenshots/dashboard.png)
+
+---
+
+### User Management
+
+![User Management](Screenshots/users.png)
+
+---
+
+### Add New User
+
+![Add New User](Screenshots/users_create.png)
+
+---
+
+### Client & Registration Module
+
+![Clients](Screenshots/clients.png)
+
+---
+
+### Add New Client
+
+![Add New Client](Screenshots/clients_create.png)
+
+---
+
+### Edit Client
+
+![Edit Client](Screenshots/clients_edit.png)
+
+---
+
+### Property Module
+
+![Properties](Screenshots/properties.png)
+
+---
+
+### Add New Property
+
+![Add New Property](Screenshots/properties_create.png)
+
+---
+
+### Staff & Branch Module
+
+![Staff](Screenshots/staff.png)
+
+---
+
+### Rentals & Viewing Module
+
+![Rentals](Screenshots/rentals.png)
+
+---
+
+### Payments & Reports Module
+
+![Payments](Screenshots/payments.png)
+
+---
+
+### Database Tables
+
+![Database](Screenshots/database.png)
+
+
+---
+
+## Notes
+
+```txt
+1. Make sure XAMPP Apache and MySQL are running before starting the app locally.
+2. Run 'npm run dev' and 'php artisan serve' in separate terminals.
+3. The default admin account is admin@dreamhome.com with password: password123.
+4. Each module has its own Git branch. Members should NOT push directly to main.
+5. Business Rules:
+   - Lease records cannot be deleted until 3 years after expiry.
+   - Property records cannot be deleted until 3 years after withdrawal.
+   - Withdrawn properties cannot be inspected.
+6. When deploying to Railway, make sure all environment variables are set correctly.
+7. The SQL script must be run in the correct order due to foreign key constraints.
+```
