@@ -101,6 +101,62 @@
 
             </div>
 
+            <!-- ASSIGNED STAFF -->
+            <div class="mb-6">
+
+                <label class="block text-gray-700 font-semibold mb-2">
+                    Assign Staff
+                </label>
+
+                <select name="staff_id"
+                        class="w-full border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+                    <option value="">
+                        Select Staff
+                    </option>
+
+                    @foreach($staff as $user)
+
+                        <option value="{{ $user->id }}">
+
+                            {{ $user->name }}
+
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            <!-- ASSIGNED BRANCH -->
+            <div class="mb-6">
+
+                <label class="block text-gray-700 font-semibold mb-2">
+                    Assign Branch
+                </label>
+
+                <select name="branch_id"
+                        class="w-full border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+                    <option value="">
+                        Select Branch
+                    </option>
+
+                    @foreach($branches as $branch)
+
+                        <option value="{{ $branch->id }}">
+
+                            {{ $branch->name }}
+
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
             <!-- START DATE -->
             <div class="mb-8">
 

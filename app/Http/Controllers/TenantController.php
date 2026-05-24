@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Tenant;
 use App\Models\Property;
+use App\Models\User;
+use App\Models\Branch;
+
 use Illuminate\Http\Request;
 
 class TenantController extends Controller
@@ -13,7 +16,11 @@ class TenantController extends Controller
      */
     public function index()
     {
-        $tenants = Tenant::with('property')->get();
+        $tenants = Tenant::with([
+            'property',
+            'staff',
+            'branch'
+        ])->get();
 
         return view('tenants.index', compact('tenants'));
     }
@@ -23,9 +30,25 @@ class TenantController extends Controller
      */
     public function create()
     {
-        $properties = Property::where('status', 'Available')->get();
+        $properties = Property::where(
+            'status',
+            'Available'
+        )->get();
 
-        return view('tenants.create', compact('properties'));
+        $staff = User::where(
+            'role',
+            'staff'
+        )->get();
+
+        $branches = Branch::all();
+
+        return view('tenants.create', compact(
+
+            'properties',
+            'staff',
+            'branches'
+
+        ));
     }
 
     /**
@@ -35,31 +58,56 @@ class TenantController extends Controller
     {
         // VALIDATION
         $request->validate([
+
             'name' => 'required|string|max:255',
+
             'email' => 'required|email|max:255',
+
             'contact' => 'required|string|max:20',
+
             'property_id' => 'required|exists:properties,id',
+
+            'staff_id' => 'nullable|exists:users,id',
+
+            'branch_id' => 'nullable|exists:branches,id',
+
             'start_date' => 'required|date',
+
         ]);
 
         // CREATE TENANT
         Tenant::create([
+
             'name' => $request->name,
+
             'email' => $request->email,
+
             'contact' => $request->contact,
+
             'property_id' => $request->property_id,
+
+            'staff_id' => $request->staff_id,
+
+            'branch_id' => $request->branch_id,
+
             'start_date' => $request->start_date
+
         ]);
 
         // AUTO UPDATE PROPERTY STATUS
         Property::find($request->property_id)
                 ->update([
+
                     'status' => 'Rented'
+
                 ]);
 
         return redirect()
                 ->route('tenants.index')
-                ->with('success', 'Tenant added successfully.');
+                ->with(
+                    'success',
+                    'Tenant added successfully.'
+                );
     }
 
     /**
@@ -77,7 +125,21 @@ class TenantController extends Controller
     {
         $properties = Property::all();
 
-        return view('tenants.edit', compact('tenant', 'properties'));
+        $staff = User::where(
+            'role',
+            'staff'
+        )->get();
+
+        $branches = Branch::all();
+
+        return view('tenants.edit', compact(
+
+            'tenant',
+            'properties',
+            'staff',
+            'branches'
+
+        ));
     }
 
     /**
@@ -87,25 +149,48 @@ class TenantController extends Controller
     {
         // VALIDATION
         $request->validate([
+
             'name' => 'required|string|max:255',
+
             'email' => 'required|email|max:255',
+
             'contact' => 'required|string|max:20',
+
             'property_id' => 'required|exists:properties,id',
+
+            'staff_id' => 'nullable|exists:users,id',
+
+            'branch_id' => 'nullable|exists:branches,id',
+
             'start_date' => 'required|date',
+
         ]);
 
         // UPDATE TENANT
         $tenant->update([
+
             'name' => $request->name,
+
             'email' => $request->email,
+
             'contact' => $request->contact,
+
             'property_id' => $request->property_id,
+
+            'staff_id' => $request->staff_id,
+
+            'branch_id' => $request->branch_id,
+
             'start_date' => $request->start_date
+
         ]);
 
         return redirect()
                 ->route('tenants.index')
-                ->with('success', 'Tenant updated successfully.');
+                ->with(
+                    'success',
+                    'Tenant updated successfully.'
+                );
     }
 
     /**
@@ -117,7 +202,9 @@ class TenantController extends Controller
         if ($tenant->property) {
 
             $tenant->property->update([
+
                 'status' => 'Available'
+
             ]);
         }
 
@@ -126,6 +213,9 @@ class TenantController extends Controller
 
         return redirect()
                 ->route('tenants.index')
-                ->with('success', 'Tenant deleted successfully.');
+                ->with(
+                    'success',
+                    'Tenant deleted successfully.'
+                );
     }
 }

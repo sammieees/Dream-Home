@@ -7,25 +7,21 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Run migrations.
      */
     public function up(): void
     {
-        Schema::create('tenants', function (Blueprint $table) {
+        Schema::create('branches', function (Blueprint $table) {
 
             $table->id();
 
             $table->string('name');
 
-            $table->string('email');
+            $table->string('address');
 
             $table->string('contact');
 
-            $table->foreignId('property_id')
-                  ->constrained()
-                  ->onDelete('cascade');
-
-            $table->date('start_date');
+            $table->string('manager');
 
             $table->timestamps();
 
@@ -33,10 +29,10 @@ return new class extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Reverse migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('tenants');
+        Schema::dropIfExists('branches');
     }
 };
