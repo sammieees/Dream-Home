@@ -19,28 +19,40 @@ class Property extends Model
         'image',
         'description',
         'owner_id',
+        'branch_id',
 
     ];
 
-    /**
-     * PROPERTY HAS MANY TENANTS
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | PROPERTY HAS MANY TENANTS
+    |--------------------------------------------------------------------------
+    */
+
     public function tenants()
     {
         return $this->hasMany(Tenant::class);
     }
 
-    /**
-     * PROPERTY BELONGS TO OWNER
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | PROPERTY BELONGS TO OWNER
+    |--------------------------------------------------------------------------
+    */
+
     public function owner()
     {
         return $this->belongsTo(Owner::class);
     }
 
-    
+    /*
+    |--------------------------------------------------------------------------
+    | PROPERTY BELONGS TO BRANCH
+    |--------------------------------------------------------------------------
+    */
+
     public function branch()
     {
-    return $this->belongsTo(Branch::class);
+        return $this->belongsTo(Branch::class);
     }
 }

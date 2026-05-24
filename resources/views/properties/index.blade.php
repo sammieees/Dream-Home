@@ -2,194 +2,196 @@
 
 @section('content')
 
-<!-- HEADER -->
-<div class="flex justify-between items-center mb-10">
+<div class="max-w-7xl mx-auto px-6 py-10">
 
-    <div>
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
 
-        <h1 class="text-4xl font-extrabold text-gray-800">
+        <h1 class="text-4xl font-bold text-gray-800">
             Properties
         </h1>
 
-        <p class="text-gray-500 mt-1">
-            Manage all available rental properties
-        </p>
+        <a href="{{ route('properties.create') }}"
+           class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl shadow-lg">
+
+            + Add Property
+
+        </a>
 
     </div>
 
-    <a href="{{ route('properties.create') }}"
-       class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-2xl shadow-lg transition duration-300">
+    <!-- Search -->
+    <form method="GET"
+          action="{{ route('properties.index') }}"
+          class="mb-8">
 
-        + Add Property
+        <div class="flex gap-4">
 
-    </a>
+            <input type="text"
+                   name="search"
+                   value="{{ request('search') }}"
+                   placeholder="Search property..."
+                   class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
 
-</div>
+            <button type="submit"
+                    class="bg-gray-800 hover:bg-black text-white px-6 py-3 rounded-xl">
 
-<!-- SEARCH BAR -->
-<form method="GET"
-      action="{{ route('properties.index') }}"
-      class="mb-10">
+                Search
 
-    <div class="flex gap-4">
+            </button>
 
-        <input type="text"
-               name="search"
-               placeholder="Search properties..."
-               value="{{ request('search') }}"
-               class="w-full border border-gray-300 rounded-2xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
 
-        <button type="submit"
-                class="bg-blue-500 hover:bg-blue-600 text-white px-8 rounded-2xl shadow">
+    </form>
 
-            Search
+    <!-- Success Message -->
+    @if(session('success'))
 
-        </button>
+        <div class="bg-green-100 text-green-700 px-6 py-4 rounded-xl mb-6">
 
-    </div>
+            {{ session('success') }}
 
-</form>
+        </div>
 
-<!-- PROPERTY GRID -->
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+    @endif
 
-    @foreach($properties as $property)
+    <!-- Properties Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-        <div class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-1">
+        @forelse($properties as $property)
 
-            <!-- IMAGE -->
-            <div class="relative overflow-hidden">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
 
-                <a href="{{ route('properties.show', $property->id) }}">
+                <!-- Property Image -->
+                @if($property->image)
 
-                    @if($property->image)
+                    <img src="{{ asset('storage/' . $property->image) }}"
+                         alt="Property Image"
+                         class="w-full h-56 object-cover">
 
-                        <img src="{{ asset('storage/' . $property->image) }}"
-                             class="w-full h-64 object-cover hover:scale-110 transition duration-500">
+                @else
 
-                    @else
+                    <div class="w-full h-56 bg-gray-200 flex items-center justify-center">
 
-                        <div class="w-full h-64 bg-gray-300 flex items-center justify-center">
+                        <span class="text-gray-500">
+                            No Image
+                        </span>
 
-                            <span class="text-gray-600 text-lg">
-                                No Image Available
+                    </div>
+
+                @endif
+
+                <!-- Card Body -->
+                <div class="p-6">
+
+                    <!-- Title -->
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">
+
+                        {{ $property->title }}
+
+                    </h2>
+
+                    <!-- Type -->
+                    <p class="text-blue-500 font-semibold mb-3">
+
+                        {{ $property->type }}
+
+                    </p>
+
+                    <!-- Rent -->
+                    <p class="text-2xl font-bold text-green-600 mb-4">
+
+                        ₱{{ number_format($property->rent) }}
+
+                    </p>
+
+                    <!-- Status -->
+                    <span class="inline-block px-4 py-2 rounded-full text-sm font-semibold
+                        @if($property->status == 'Available')
+                            bg-green-100 text-green-700
+                        @elseif($property->status == 'Rented')
+                            bg-red-100 text-red-700
+                        @else
+                            bg-yellow-100 text-yellow-700
+                        @endif
+                    ">
+
+                        {{ $property->status }}
+
+                    </span>
+
+                    <!-- Address + Owner + Branch -->
+                    <div class="mt-4 space-y-2">
+
+                        <!-- Address -->
+                        <p class="text-gray-700">
+
+                            📍 {{ $property->address }}
+
+                        </p>
+
+                        <!-- Owner -->
+                        <p class="text-gray-700">
+
+                            👤 Owner:
+                            <span class="font-semibold">
+
+                                {{ $property->owner->name ?? 'N/A' }}
+
                             </span>
+
+                        </p>
+
+                        <!-- Branch -->
+                        <p class="text-gray-700">
+
+                            🏢 Branch:
+                            <span class="font-semibold">
+
+                                {{ $property->branch->name ?? 'N/A' }}
+
+                            </span>
+
+                        </p>
+
+                    </div>
+
+                    <!-- Description -->
+                    @if($property->description)
+
+                        <div class="mt-4">
+
+                            <p class="text-gray-600 text-sm leading-relaxed">
+
+                                {{ $property->description }}
+
+                            </p>
 
                         </div>
 
                     @endif
 
-                </a>
+                    <!-- Buttons -->
+                    <div class="flex gap-3 mt-6">
 
-                <!-- STATUS -->
-                <div class="absolute top-4 right-4">
-
-                    @if($property->status == 'Available')
-
-                        <span class="bg-green-500 text-white px-4 py-1 rounded-full text-sm font-semibold shadow">
-                            Available
-                        </span>
-
-                    @elseif($property->status == 'Rented')
-
-                        <span class="bg-red-500 text-white px-4 py-1 rounded-full text-sm font-semibold shadow">
-                            Rented
-                        </span>
-
-                    @else
-
-                        <span class="bg-yellow-500 text-white px-4 py-1 rounded-full text-sm font-semibold shadow">
-                            Reserved
-                        </span>
-
-                    @endif
-
-                </div>
-
-            </div>
-
-            <!-- CONTENT -->
-            <div class="p-6">
-
-                <!-- TITLE -->
-                <div class="flex justify-between items-start mb-3">
-
-                    <div>
-
-                        <h2 class="text-2xl font-bold text-gray-800">
-                            {{ $property->title }}
-                        </h2>
-
-                        <p class="text-gray-500 mt-1">
-                            {{ $property->type }}
-                        </p>
-
-                    </div>
-
-                    <div class="text-right">
-
-                        <p class="text-sm text-gray-400">
-                            Monthly Rent
-                        </p>
-
-                        <h3 class="text-xl font-bold text-blue-600">
-                            ₱{{ number_format($property->rent, 2) }}
-                        </h3>
-
-                    </div>
-
-                </div>
-
-                <!-- ADDRESS -->
-                <div class="mt-4">
-
-                    <p class="text-gray-700">
-                        📍 {{ $property->address }}
-                    </p>
-
-                </div>
-
-                <!-- DESCRIPTION -->
-                <div class="mt-5">
-
-                    <p class="text-gray-600 leading-relaxed">
-
-                        {{ $property->description }}
-
-                    </p>
-
-                </div>
-
-                <!-- BUTTONS -->
-                <div class="flex justify-between items-center mt-8">
-
-                    <!-- VIEW DETAILS -->
-                    <a href="{{ route('properties.show', $property->id) }}"
-                       class="text-blue-600 hover:text-blue-800 font-semibold">
-
-                        View Details →
-
-                    </a>
-
-                    <!-- ACTION BUTTONS -->
-                    <div class="flex gap-3">
-
+                        <!-- Edit -->
                         <a href="{{ route('properties.edit', $property->id) }}"
-                           class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl shadow transition">
+                           class="bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-lg">
 
                             Edit
 
                         </a>
 
+                        <!-- Delete -->
                         <form action="{{ route('properties.destroy', $property->id) }}"
-                              method="POST">
+                              method="POST"
+                              onsubmit="return confirm('Delete this property?')">
 
                             @csrf
                             @method('DELETE')
 
                             <button type="submit"
-                                    onclick="return confirm('Delete this property?')"
-                                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl shadow transition">
+                                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
 
                                 Delete
 
@@ -203,9 +205,27 @@
 
             </div>
 
-        </div>
+        @empty
 
-    @endforeach
+            <div class="col-span-3">
+
+                <div class="bg-white p-10 rounded-2xl shadow text-center">
+
+                    <h2 class="text-2xl font-bold text-gray-700 mb-2">
+                        No Properties Found
+                    </h2>
+
+                    <p class="text-gray-500">
+                        Try adding a new property.
+                    </p>
+
+                </div>
+
+            </div>
+
+        @endforelse
+
+    </div>
 
 </div>
 

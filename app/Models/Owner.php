@@ -6,5 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Owner extends Model
 {
-    //
+    protected $fillable = [
+
+        'name',
+        'email',
+        'contact',
+        'address',
+
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | OWNER HAS MANY PROPERTIES
+    |--------------------------------------------------------------------------
+    */
+
+    public function properties()
+    {
+        return $this->hasMany(Property::class);
+    }
 }

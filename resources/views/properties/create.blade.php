@@ -55,6 +55,64 @@
 
         </div>
 
+        <!-- OWNER -->
+        <div class="mb-6">
+
+            <label class="block text-lg font-semibold mb-2">
+                Property Owner
+            </label>
+
+            <select name="owner_id"
+                    required
+                    class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                <option value="">
+                    Select Owner
+                </option>
+
+                @foreach($owners as $owner)
+
+                    <option value="{{ $owner->id }}">
+
+                        {{ $owner->name }}
+
+                    </option>
+
+                @endforeach
+
+            </select>
+
+        </div>
+
+        <!-- BRANCH -->
+        <div class="mb-6">
+
+            <label class="block text-lg font-semibold mb-2">
+                Branch
+            </label>
+
+            <select name="branch_id"
+                    required
+                    class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                <option value="">
+                    Select Branch
+                </option>
+
+                @foreach($branches as $branch)
+
+                    <option value="{{ $branch->id }}">
+
+                        {{ $branch->name }}
+
+                    </option>
+
+                @endforeach
+
+            </select>
+
+        </div>
+
         <!-- Rent -->
         <div class="mb-6">
 
@@ -109,15 +167,16 @@
 
         </div>
 
+        <!-- Description -->
         <div class="mb-6">
 
-         <label class="block mb-2 font-semibold">
-        Description
-          </label>
+            <label class="block mb-2 font-semibold">
+                Description
+            </label>
 
-        <textarea name="description"
-              rows="5"
-              class="w-full border rounded-xl p-3"></textarea>
+            <textarea name="description"
+                      rows="5"
+                      class="w-full border rounded-xl p-3"></textarea>
 
         </div>
 

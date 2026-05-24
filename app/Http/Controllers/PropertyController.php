@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Property;
+use App\Models\Owner;
+use App\Models\Branch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,17 +15,17 @@ class PropertyController extends Controller
      */
     public function index(Request $request)
     {
-    $search = $request->search;
+        $search = $request->search;
 
-    $properties = Property::when($search, function ($query, $search) {
+        $properties = Property::when($search, function ($query, $search) {
 
-        $query->where('title', 'like', "%{$search}%")
-              ->orWhere('type', 'like', "%{$search}%")
-              ->orWhere('address', 'like', "%{$search}%");
+            $query->where('title', 'like', "%{$search}%")
+                  ->orWhere('type', 'like', "%{$search}%")
+                  ->orWhere('address', 'like', "%{$search}%");
 
-    })->get();
+        })->get();
 
-    return view('properties.index', compact('properties'));
+        return view('properties.index', compact('properties'));
     }
 
     /**
@@ -31,7 +33,14 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        return view('properties.create');
+        $owners = Owner::all();
+
+        $branches = Branch::all();
+
+        return view('properties.create', compact(
+            'owners',
+            'branches'
+        ));
     }
 
     /**
@@ -47,6 +56,10 @@ class PropertyController extends Controller
             'rent' => 'required|numeric',
             'address' => 'required',
             'status' => 'required',
+
+            'owner_id' => 'required|exists:owners,id',
+            'branch_id' => 'required|exists:branches,id',
+
             'description' => 'nullable',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
 
@@ -69,6 +82,10 @@ class PropertyController extends Controller
             'rent' => $request->rent,
             'address' => $request->address,
             'status' => $request->status,
+
+            'owner_id' => $request->owner_id,
+            'branch_id' => $request->branch_id,
+
             'description' => $request->description,
             'image' => $imagePath
 
@@ -92,7 +109,15 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
-        return view('properties.edit', compact('property'));
+        $owners = Owner::all();
+
+        $branches = Branch::all();
+
+        return view('properties.edit', compact(
+            'property',
+            'owners',
+            'branches'
+        ));
     }
 
     /**
@@ -108,6 +133,10 @@ class PropertyController extends Controller
             'rent' => 'required|numeric',
             'address' => 'required',
             'status' => 'required',
+
+            'owner_id' => 'required|exists:owners,id',
+            'branch_id' => 'required|exists:branches,id',
+
             'description' => 'nullable',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
 
@@ -137,6 +166,10 @@ class PropertyController extends Controller
             'rent' => $request->rent,
             'address' => $request->address,
             'status' => $request->status,
+
+            'owner_id' => $request->owner_id,
+            'branch_id' => $request->branch_id,
+
             'description' => $request->description,
             'image' => $imagePath
 
