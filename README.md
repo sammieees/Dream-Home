@@ -33,7 +33,7 @@ DreamHome is a web-based property management system that helps organize rental o
 ## Repository Link
 
 ```txt
-https://github.com/digangjaysonrey123/dreamhome
+https://github.com/sammieees/Dream-Home.git
 ```
 
 ---
@@ -68,12 +68,12 @@ php artisan key:generate
 Update `.env` with your database credentials:
 
 ```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=DreamHome
-DB_USERNAME=root
-DB_PASSWORD=
+ DB_CONNECTION=mysql
+ DB_HOST=127.0.0.1
+ DB_PORT=3307
+ DB_DATABASE=dream_home
+ DB_USERNAME=root
+ DB_PASSWORD=
 ```
 
 ---
@@ -81,7 +81,7 @@ DB_PASSWORD=
 ### Import Database
 
 1. Open MySQL Workbench or phpMyAdmin
-2. Create a database called `DreamHome`
+2. Create a database called `dream_home`
 3. Run the SQL script provided in the repository
 4. The script includes all tables, sample data, and triggers
 
