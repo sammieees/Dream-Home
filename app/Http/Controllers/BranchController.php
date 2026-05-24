@@ -34,6 +34,8 @@ class BranchController extends Controller
 
             'name' => 'required',
 
+            'location' => 'required',
+
             'address' => 'required',
 
             'contact' => 'required',
@@ -42,7 +44,19 @@ class BranchController extends Controller
 
         ]);
 
-        Branch::create($request->all());
+        Branch::create([
+
+            'name' => $request->name,
+
+            'location' => $request->location,
+
+            'address' => $request->address,
+
+            'contact' => $request->contact,
+
+            'manager' => $request->manager,
+
+        ]);
 
         return redirect()
             ->route('branches.index')
@@ -66,6 +80,8 @@ class BranchController extends Controller
 
             'name' => 'required',
 
+            'location' => 'required',
+
             'address' => 'required',
 
             'contact' => 'required',
@@ -74,7 +90,19 @@ class BranchController extends Controller
 
         ]);
 
-        $branch->update($request->all());
+        $branch->update([
+
+            'name' => $request->name,
+
+            'location' => $request->location,
+
+            'address' => $request->address,
+
+            'contact' => $request->contact,
+
+            'manager' => $request->manager,
+
+        ]);
 
         return redirect()
             ->route('branches.index')
@@ -92,4 +120,4 @@ class BranchController extends Controller
             ->route('branches.index')
             ->with('success', 'Branch deleted successfully.');
     }
-}
+}   

@@ -42,6 +42,8 @@
                 <th class="text-left p-5">Email</th>
                 <th class="text-left p-5">Contact</th>
                 <th class="text-left p-5">Property</th>
+                <th class="text-left p-5">Staff</th>
+                <th class="text-left p-5">Branch</th>
                 <th class="text-left p-5">Start Date</th>
 
                 <!-- ONLY ADMIN CAN SEE ACTIONS -->
@@ -79,6 +81,16 @@
                     <!-- PROPERTY -->
                     <td class="p-5 text-gray-600">
                         {{ $tenant->property->title ?? 'No Property Assigned' }}
+                    </td>
+
+                    <!-- STAFF -->
+                    <td class="p-5 text-gray-600">
+                        {{ $tenant->staff->name ?? 'No Staff Assigned' }}
+                    </td>
+
+                    <!-- BRANCH -->
+                    <td class="p-5 text-gray-600">
+                        {{ $tenant->branch->name ?? 'No Branch Assigned' }}
                     </td>
 
                     <!-- START DATE -->
@@ -130,7 +142,7 @@
 
                 <tr>
 
-                    <td colspan="6"
+                    <td colspan="8"
                         class="text-center p-10 text-gray-500">
 
                         No tenants found.
