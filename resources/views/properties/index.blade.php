@@ -1,24 +1,18 @@
 @extends('layouts.app')
 
+@section('page_title', 'Properties')
+@section('page_subtitle', 'Browse and manage property listings')
+
+@section('header_actions')
+    <a href="{{ route('properties.create') }}"
+       class="inline-flex items-center justify-center rounded-2xl bg-cyan-600 px-5 py-3 text-white font-semibold shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-700">
+        + Add Property
+    </a>
+@endsection
+
 @section('content')
 
 <div class="max-w-7xl mx-auto px-6 py-10">
-
-    <!-- Header -->
-    <div class="flex justify-between items-center mb-8">
-
-        <h1 class="text-4xl font-bold text-gray-800">
-            Properties
-        </h1>
-
-        <a href="{{ route('properties.create') }}"
-           class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl shadow-lg">
-
-            + Add Property
-
-        </a>
-
-    </div>
 
     <!-- Search -->
     <form method="GET"
@@ -34,7 +28,7 @@
                    class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
 
             <button type="submit"
-                    class="bg-gray-800 hover:bg-black text-white px-6 py-3 rounded-xl">
+                    class="inline-flex items-center justify-center rounded-2xl bg-slate-700 px-6 py-3 text-white font-semibold shadow-sm transition hover:bg-slate-800">
 
                 Search
 
@@ -60,7 +54,7 @@
 
         @forelse($properties as $property)
 
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
 
                 <!-- Property Image -->
                 @if($property->image)
@@ -107,13 +101,21 @@
 
                     <!-- Status -->
                     <span class="inline-block px-4 py-2 rounded-full text-sm font-semibold
+
                         @if($property->status == 'Available')
+
                             bg-green-100 text-green-700
-                        @elseif($property->status == 'Rented')
-                            bg-red-100 text-red-700
-                        @else
+
+                        @elseif($property->status == 'Reserved')
+
                             bg-yellow-100 text-yellow-700
+
+                        @else
+
+                            bg-red-100 text-red-700
+
                         @endif
+
                     ">
 
                         {{ $property->status }}

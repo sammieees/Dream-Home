@@ -1,31 +1,18 @@
 @extends('layouts.app')
 
+@section('page_title', 'Owners')
+@section('page_subtitle', 'Manage property owners')
+
+@section('header_actions')
+    <a href="{{ route('owners.create') }}"
+       class="inline-flex items-center justify-center rounded-2xl bg-cyan-600 px-5 py-3 text-white font-semibold shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-700">
+        + Add Owner
+    </a>
+@endsection
+
 @section('content')
 
-<div class="flex justify-between items-center mb-8">
-
-    <div>
-
-        <h1 class="text-4xl font-bold text-gray-800">
-            Owners
-        </h1>
-
-        <p class="text-gray-500 mt-1">
-            Manage property owners
-        </p>
-
-    </div>
-
-    <a href="{{ route('owners.create') }}"
-       class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-2xl shadow-lg transition">
-
-        + Add Owner
-
-    </a>
-
-</div>
-
-<div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+<div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
 
     <table class="w-full">
 
@@ -70,7 +57,7 @@
                         <div class="flex gap-3">
 
                             <a href="{{ route('owners.edit', $owner) }}"
-                               class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl">
+                               class="inline-flex items-center justify-center rounded-2xl bg-amber-400 px-4 py-2 text-white font-semibold shadow-sm transition hover:bg-amber-500">
 
                                 Edit
 
@@ -84,7 +71,7 @@
 
                                 <button type="submit"
                                         onclick="return confirm('Delete owner?')"
-                                        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl">
+                                        class="inline-flex items-center justify-center rounded-2xl bg-rose-500 px-4 py-2 text-white font-semibold shadow-sm transition hover:bg-rose-600">
 
                                     Delete
 

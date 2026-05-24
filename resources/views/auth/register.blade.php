@@ -30,7 +30,7 @@
         <div class="mt-4">
 
             <x-input-label for="email"
-                           :value="__('University Email')" />
+                           :value="__('Email')" />
 
             <x-text-input id="email"
                           class="block mt-1 w-full"
@@ -39,7 +39,7 @@
                           :value="old('email')"
                           required
                           autocomplete="username"
-                          placeholder="jane@university.edu" />
+                          placeholder="example@gmail.com" />
 
             <x-input-error :messages="$errors->get('email')"
                            class="mt-2" />
@@ -58,7 +58,7 @@
                           name="password"
                           required
                           autocomplete="new-password"
-                          placeholder="••••••••" />
+                          placeholder="Enter password" />
 
             <x-input-error :messages="$errors->get('password')"
                            class="mt-2" />
@@ -77,7 +77,7 @@
                           name="password_confirmation"
                           required
                           autocomplete="new-password"
-                          placeholder="••••••••" />
+                          placeholder="Confirm password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')"
                            class="mt-2" />
@@ -92,6 +92,7 @@
 
             <select id="role"
                     name="role"
+                    required
                     class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
 
                 <option value="staff">
@@ -121,7 +122,7 @@
 
             <x-primary-button class="ms-4">
 
-                {{ __('Sign Up') }}
+                {{ __('Register') }}
 
             </x-primary-button>
 

@@ -1,8 +1,25 @@
 @extends('layouts.app')
 
+@section('page_title', 'Edit Property')
+@section('page_subtitle', 'Update property details')
+@section('breadcrumbs')
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+        <a href="{{ route('properties.index') }}" class="hover:text-slate-900">Properties</a>
+        <span>/</span>
+        <span>Edit Property</span>
+    </div>
+@endsection
+
+@section('header_actions')
+    <a href="{{ route('properties.index') }}"
+       class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-5 py-3 rounded-2xl transition font-semibold">
+        Back
+    </a>
+@endsection
+
 @section('content')
 
-<div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+<div class="max-w-5xl mx-auto bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
 
     <!-- Property Image -->
     @if($property->image)
@@ -13,10 +30,6 @@
     @endif
 
     <div class="p-10">
-
-        <h1 class="text-4xl font-bold mb-8">
-            Edit Property
-        </h1>
 
         <form method="POST"
               action="{{ route('properties.update', $property->id) }}"
@@ -200,14 +213,14 @@
             <div class="flex gap-4 mt-8">
 
                 <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-xl shadow-lg">
+                        class="inline-flex items-center justify-center rounded-2xl bg-cyan-600 px-8 py-4 text-white font-semibold shadow-lg transition hover:bg-cyan-700">
 
                     Update Property
 
                 </button>
 
                 <a href="{{ route('properties.index') }}"
-                   class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-4 rounded-xl shadow-lg">
+                   class="inline-flex items-center justify-center rounded-2xl bg-slate-500 px-8 py-4 text-white font-semibold shadow-sm transition hover:bg-slate-600">
 
                     Cancel
 

@@ -34,7 +34,7 @@ class OwnerController extends Controller
 
             'name' => 'required',
 
-            'email' => 'required|email|unique:owners',
+            'email' => 'required|email|unique:owners,email',
 
             'contact' => 'required',
 
@@ -42,7 +42,14 @@ class OwnerController extends Controller
 
         ]);
 
-        Owner::create($request->all());
+        Owner::create([
+
+            'name' => $request->name,
+            'email' => $request->email,
+            'contact' => $request->contact,
+            'address' => $request->address,
+
+        ]);
 
         return redirect()
             ->route('owners.index')
@@ -66,7 +73,7 @@ class OwnerController extends Controller
 
             'name' => 'required',
 
-            'email' => 'required|email',
+            'email' => 'required|email|unique:owners,email,' . $owner->id,
 
             'contact' => 'required',
 
@@ -74,7 +81,14 @@ class OwnerController extends Controller
 
         ]);
 
-        $owner->update($request->all());
+        $owner->update([
+
+            'name' => $request->name,
+            'email' => $request->email,
+            'contact' => $request->contact,
+            'address' => $request->address,
+
+        ]);
 
         return redirect()
             ->route('owners.index')

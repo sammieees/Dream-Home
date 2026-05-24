@@ -1,154 +1,77 @@
 @extends('layouts.app')
 
+@section('page_title', 'Staff Management')
+@section('page_subtitle', 'Manage staff salaries and assignments')
+
+@section('header_actions')
+    <a href="{{ route('staff.create') }}"
+       class="inline-flex items-center bg-blue-500 hover:bg-blue-600 text-white px-5 py-3 rounded-2xl shadow-lg transition">
+        + Add Staff
+    </a>
+@endsection
+
 @section('content')
 
-<div class="flex justify-between items-center mb-8">
+    @if(session('success'))
+        <div class="bg-green-100 text-green-700 px-4 py-3 rounded-2xl mb-6">
+            {{ session('success') }}
+        </div>
+    @endif
 
-    <div>
-
-        <h1 class="text-4xl font-bold text-gray-800">
-            Staff Management
-        </h1>
-
-        <p class="text-gray-500 mt-1">
-            Manage staff salaries and assignments
-        </p>
-
-    </div>
-
-</div>
-
-@if(session('success'))
-
-    <div class="bg-green-100 text-green-700 px-4 py-3 rounded-2xl mb-6">
-
-        {{ session('success') }}
-
-    </div>
-
-@endif
-
-<div class="bg-white rounded-3xl shadow-xl overflow-hidden">
-
-    <table class="w-full">
-
-        <thead class="bg-gray-100">
-
-            <tr>
-
-                <th class="text-left p-5">Name</th>
-
-                <th class="text-left p-5">Email</th>
-
-                <th class="text-left p-5">Role</th>
-
-                <th class="text-left p-5">Salary</th>
-
-                <th class="text-left p-5">Action</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-            @forelse($staff as $user)
-
-                <tr class="border-t hover:bg-gray-50 transition">
-
-                    <!-- NAME -->
-                    <td class="p-5 font-semibold">
-
-                        {{ $user->name }}
-
-                    </td>
-
-                    <!-- EMAIL -->
-                    <td class="p-5">
-
-                        {{ $user->email }}
-
-                    </td>
-
-                    <!-- ROLE -->
-                    <td class="p-5">
-
-                        {{ ucfirst($user->role) }}
-
-                    </td>
-
-                    <!-- SALARY -->
-                    <td class="p-5">
-
-                        @if($user->salary)
-
-                            <span class="text-green-600 font-bold">
-
-                                ₱{{ number_format($user->salary, 2) }}
-
-                            </span>
-
-                        @else
-
-                            <span class="text-red-500 font-semibold">
-
-                                Not Assigned
-
-                            </span>
-
-                        @endif
-
-                    </td>
-
-                    <!-- ACTION -->
-                    <td class="p-5">
-
-                        <form action="{{ route('staff.updateSalary', $user->id) }}"
-                              method="POST"
-                              class="flex items-center gap-2">
-
-                            @csrf
-                            @method('PATCH')
-
-                            <input type="number"
-                                   step="0.01"
-                                   name="salary"
-                                   value="{{ $user->salary }}"
-                                   placeholder="Enter salary"
-                                   class="border border-gray-300 rounded-xl px-3 py-2 w-40 focus:ring focus:ring-blue-200">
-
-                            <button type="submit"
-                                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl shadow transition">
-
-                                Save
-
-                            </button>
-
-                        </form>
-
-                    </td>
-
-                </tr>
-
-            @empty
-
+    <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200">
+        <table class="w-full">
+            <thead class="bg-slate-50">
                 <tr>
-
-                    <td colspan="5"
-                        class="text-center p-10 text-gray-500">
-
-                        No staff found.
-
-                    </td>
-
+                    <th class="text-left p-5 text-sm font-semibold uppercase tracking-[0.15em] text-slate-500">Name</th>
+                    <th class="text-left p-5 text-sm font-semibold uppercase tracking-[0.15em] text-slate-500">Email</th>
+                    <th class="text-left p-5 text-sm font-semibold uppercase tracking-[0.15em] text-slate-500">Role</th>
+                    <th class="text-left p-5 text-sm font-semibold uppercase tracking-[0.15em] text-slate-500">Salary</th>
+                    <th class="text-left p-5 text-sm font-semibold uppercase tracking-[0.15em] text-slate-500">Action</th>
                 </tr>
-
-            @endforelse
-
-        </tbody>
-
-    </table>
-
-</div>
+            </thead>
+            <tbody>
+                @forelse($staff as $user)
+                    <tr class="border-t border-slate-200 hover:bg-slate-50 transition-all">
+                        <td class="p-5 font-semibold text-slate-900">{{ $user->name }}</td>
+                        <td class="p-5 text-slate-600">{{ $user->email }}</td>
+                        <td class="p-5 text-slate-600">{{ ucfirst($user->role) }}</td>
+                        <td class="p-5">
+                            @if($user->salary)
+                                <span class="rounded-full bg-emerald-50 text-emerald-700 px-3 py-1 text-sm font-semibold">₱{{ number_format($user->salary, 2) }}</span>
+                            @else
+                                <span class="rounded-full bg-rose-50 text-rose-600 px-3 py-1 text-sm font-semibold">Not Assigned</span>
+                            @endif
+                        </td>
+                        <td class="p-5">
+                            <div class="flex flex-wrap gap-2 items-center">
+                                <form action="{{ route('staff.updateSalary', $user->id) }}" method="POST" class="flex items-center gap-2">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="number" step="0.01" name="salary" value="{{ $user->salary }}" placeholder="Salary"
+                                           class="border border-gray-300 rounded-2xl px-3 py-2 w-36 focus:ring-2 focus:ring-blue-200" />
+                                    <button type="submit"
+                                            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-2xl shadow-sm transition">
+                                        Save
+                                    </button>
+                                </form>
+                                <a href="{{ route('staff.edit', $user->id) }}"
+                                   class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-2xl shadow-sm transition">Edit</a>
+                                <form action="{{ route('staff.destroy', $user->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" onclick="return confirm('Delete this staff member?')"
+                                            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-2xl shadow-sm transition">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center p-10 text-slate-500">No staff found.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 
 @endsection

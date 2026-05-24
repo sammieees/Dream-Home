@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller
 
         } else {
 
-            return redirect()->route('staff.dashboard');
+            return redirect()->route('dashboard');
 
         }
     }

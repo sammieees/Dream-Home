@@ -1,114 +1,138 @@
 @extends('layouts.app')
 
+@section('page_title', 'Reports')
+@section('page_subtitle', 'System analytics and financial reports')
+
+@section('header_actions')
+    <a href="{{ route('reports.index') }}"
+       class="inline-flex items-center justify-center rounded-2xl bg-cyan-600 px-5 py-3 text-white font-semibold shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-700">
+        Refresh Reports
+    </a>
+@endsection
+
 @section('content')
 
-<div class="mb-10">
-
-    <h1 class="text-4xl font-bold text-gray-800">
-        Reports Dashboard
-    </h1>
-
-    <p class="text-gray-500 mt-2">
-        System analytics and financial reports
-    </p>
-
-</div>
-
-<!-- CARDS -->
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
 
     <!-- TOTAL PROPERTIES -->
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
 
-        <h2 class="text-gray-500 text-lg">
-            Total Properties
-        </h2>
-
-        <p class="text-5xl font-bold mt-4 text-blue-500">
-            {{ $totalProperties }}
-        </p>
+        <div class="flex items-center justify-between gap-3">
+            <div>
+                <h2 class="text-slate-500 text-sm uppercase tracking-[0.35em]">
+                    Total Properties
+                </h2>
+                <p class="mt-5 text-5xl font-bold text-slate-900">
+                    {{ $totalProperties }}
+                </p>
+            </div>
+            <div class="h-12 w-12 rounded-3xl bg-sky-50 text-sky-600 grid place-items-center text-2xl">🏠</div>
+        </div>
 
     </div>
 
     <!-- AVAILABLE -->
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
 
-        <h2 class="text-gray-500 text-lg">
-            Available Properties
-        </h2>
-
-        <p class="text-5xl font-bold mt-4 text-green-500">
-            {{ $availableProperties }}
-        </p>
+        <div class="flex items-center justify-between gap-3">
+            <div>
+                <h2 class="text-slate-500 text-sm uppercase tracking-[0.35em]">
+                    Available Properties
+                </h2>
+                <p class="mt-5 text-5xl font-bold text-slate-900">
+                    {{ $availableProperties }}
+                </p>
+            </div>
+            <div class="h-12 w-12 rounded-3xl bg-emerald-50 text-emerald-600 grid place-items-center text-2xl">✅</div>
+        </div>
 
     </div>
 
     <!-- RENTED -->
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
 
-        <h2 class="text-gray-500 text-lg">
-            Rented Properties
-        </h2>
-
-        <p class="text-5xl font-bold mt-4 text-red-500">
-            {{ $rentedProperties }}
-        </p>
+        <div class="flex items-center justify-between gap-3">
+            <div>
+                <h2 class="text-slate-500 text-sm uppercase tracking-[0.35em]">
+                    Rented Properties
+                </h2>
+                <p class="mt-5 text-5xl font-bold text-slate-900">
+                    {{ $rentedProperties }}
+                </p>
+            </div>
+            <div class="h-12 w-12 rounded-3xl bg-red-50 text-red-600 grid place-items-center text-2xl">🏘️</div>
+        </div>
 
     </div>
 
     <!-- TENANTS -->
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
 
-        <h2 class="text-gray-500 text-lg">
-            Total Tenants
-        </h2>
-
-        <p class="text-5xl font-bold mt-4 text-purple-500">
-            {{ $totalTenants }}
-        </p>
+        <div class="flex items-center justify-between gap-3">
+            <div>
+                <h2 class="text-slate-500 text-sm uppercase tracking-[0.35em]">
+                    Total Tenants
+                </h2>
+                <p class="mt-5 text-5xl font-bold text-slate-900">
+                    {{ $totalTenants }}
+                </p>
+            </div>
+            <div class="h-12 w-12 rounded-3xl bg-violet-50 text-violet-600 grid place-items-center text-2xl">👥</div>
+        </div>
 
     </div>
 
     <!-- TOTAL REVENUE -->
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
 
-        <h2 class="text-gray-500 text-lg">
-            Total Revenue
-        </h2>
-
-        <p class="text-4xl font-bold mt-4 text-yellow-500">
-            ₱{{ number_format($totalRevenue, 2) }}
-        </p>
+        <div class="flex items-center justify-between gap-3">
+            <div>
+                <h2 class="text-slate-500 text-sm uppercase tracking-[0.35em]">
+                    Total Revenue
+                </h2>
+                <p class="mt-5 text-4xl font-bold text-slate-900">
+                    ₱{{ number_format($totalRevenue, 2) }}
+                </p>
+            </div>
+            <div class="h-12 w-12 rounded-3xl bg-amber-50 text-amber-600 grid place-items-center text-2xl">💰</div>
+        </div>
 
     </div>
 
     <!-- MONTHLY REVENUE -->
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
 
-        <h2 class="text-gray-500 text-lg">
-            Monthly Revenue
-        </h2>
-
-        <p class="text-4xl font-bold mt-4 text-indigo-500">
-            ₱{{ number_format($monthlyRevenue, 2) }}
-        </p>
+        <div class="flex items-center justify-between gap-3">
+            <div>
+                <h2 class="text-slate-500 text-sm uppercase tracking-[0.35em]">
+                    Monthly Revenue
+                </h2>
+                <p class="mt-5 text-4xl font-bold text-slate-900">
+                    ₱{{ number_format($monthlyRevenue, 2) }}
+                </p>
+            </div>
+            <div class="h-12 w-12 rounded-3xl bg-indigo-50 text-indigo-600 grid place-items-center text-2xl">📈</div>
+        </div>
 
     </div>
 
 </div>
 
 <!-- REVENUE CHART -->
-<div class="bg-white p-8 rounded-3xl shadow-xl mt-10">
+<div class="bg-white border border-slate-200 p-8 rounded-3xl shadow-sm mt-10">
 
-    <h2 class="text-3xl font-bold text-gray-800 mb-2">
-        Revenue Overview
-    </h2>
+    <div class="mb-6">
 
-    <p class="text-gray-500 mb-6">
-        Compare total and monthly revenue
-    </p>
+        <h2 class="text-3xl font-bold text-slate-900">
+            Revenue Overview
+        </h2>
 
-    <!-- FIXED HEIGHT -->
+        <p class="text-slate-500 mt-1">
+            Compare total and monthly revenue.
+        </p>
+
+    </div>
+
     <div class="h-[400px]">
 
         <canvas id="revenueChart"></canvas>
@@ -118,20 +142,129 @@
 </div>
 
 <!-- PROPERTY STATUS CHART -->
-<div class="bg-white p-8 rounded-3xl shadow-xl mt-10">
+<div class="bg-white border border-slate-200 p-8 rounded-3xl shadow-sm mt-10">
 
-    <h2 class="text-3xl font-bold text-gray-800 mb-2">
-        Property Status Overview
-    </h2>
+    <div class="mb-6">
 
-    <p class="text-gray-500 mb-6">
-        Compare available and rented properties
-    </p>
+        <h2 class="text-3xl font-bold text-slate-900">
+            Property Status Overview
+        </h2>
 
-    <!-- FIXED HEIGHT -->
+        <p class="text-slate-500 mt-1">
+            Compare available and rented properties.
+        </p>
+
+    </div>
+
     <div class="h-[400px]">
 
         <canvas id="propertyChart"></canvas>
+
+    </div>
+
+</div>
+
+<!-- RECENT PAYMENTS -->
+<div class="bg-white border border-slate-200 p-8 rounded-3xl shadow-sm mt-10">
+
+    <h2 class="text-3xl font-bold text-slate-900 mb-6">
+        Recent Payments
+    </h2>
+
+    <div class="overflow-x-auto">
+
+        <table class="w-full">
+
+            <thead class="bg-slate-50">
+
+                <tr class="text-slate-700">
+
+                    <th class="text-left p-4">
+                        Tenant
+                    </th>
+
+                    <th class="text-left p-4">
+                        Amount
+                    </th>
+
+                    <th class="text-left p-4">
+                        Date
+                    </th>
+
+                    <th class="text-left p-4">
+                        Status
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @forelse(\App\Models\Payment::latest()->take(5)->get() as $payment)
+
+                    <tr class="border-t border-slate-200">
+
+                        <td class="p-4 font-semibold text-slate-900">
+
+                            {{ $payment->tenant->name ?? 'No Tenant' }}
+
+                        </td>
+
+                        <td class="p-4 text-emerald-600 font-bold">
+
+                            ₱{{ number_format($payment->amount, 2) }}
+
+                        </td>
+
+                        <td class="p-4 text-slate-500">
+
+                            {{ $payment->payment_date }}
+
+                        </td>
+
+                        <td class="p-4">
+
+                            @if($payment->status == 'Paid')
+
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-xl">
+
+                                    Paid
+
+                                </span>
+
+                            @else
+
+                                <span class="bg-red-100 text-red-700 px-3 py-1 rounded-xl">
+
+                                    Unpaid
+
+                                </span>
+
+                            @endif
+
+                        </td>
+
+                    </tr>
+
+                @empty
+
+                    <tr>
+
+                        <td colspan="4"
+                            class="text-center p-8 text-slate-500">
+
+                            No recent payments found.
+
+                        </td>
+
+                    </tr>
+
+                @endforelse
+
+            </tbody>
+
+        </table>
 
     </div>
 
@@ -142,7 +275,7 @@
 
 <script>
 
-    // REVENUE BAR CHART
+    // REVENUE CHART
     const revenueChart = new Chart(
         document.getElementById('revenueChart'),
         {
@@ -178,7 +311,7 @@
         }
     );
 
-    // PROPERTY DOUGHNUT CHART
+    // PROPERTY STATUS CHART
     const propertyChart = new Chart(
         document.getElementById('propertyChart'),
         {

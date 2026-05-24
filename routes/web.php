@@ -1,87 +1,33 @@
-<?php
+﻿<?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
+use App\Models\Property;
+use App\Models\Tenant;
+use App\Models\Payment;
 
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\TenantController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ReportController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\PropertyViewingController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\LeaseAgreementController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReportController;
 
-use App\Models\Property;
-use App\Models\Payment;
-use App\Models\Tenant;
+/*
+|--------------------------------------------------------------------------
+| HOME
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/', function () {
 
-    return view('welcome');
+    return redirect('/login');
 
 });
-
-/*
-|--------------------------------------------------------------------------
-| ADMIN DASHBOARD
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/dashboard', function () {
-
-    // ONLY ADMIN CAN ACCESS
-    if (auth()->user()->role !== 'admin') {
-
-        return redirect()->route('staff.dashboard');
-
-    }
-
-    $totalProperties = Property::count();
-
-    $availableProperties = Property::where(
-        'status',
-        'Available'
-    )->count();
-
-    $rentedProperties = Property::where(
-        'status',
-        'Rented'
-    )->count();
-
-    $totalRevenue = Payment::sum('amount');
-
-    $totalTenants = Tenant::count();
-
-    return view('dashboard', compact(
-
-        'totalProperties',
-        'availableProperties',
-        'rentedProperties',
-        'totalRevenue',
-        'totalTenants'
-
-    ));
-
-})->middleware(['auth'])->name('dashboard');
-
-/*
-|--------------------------------------------------------------------------
-| STAFF DASHBOARD
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/staff-dashboard', function () {
-
-    // ONLY STAFF CAN ACCESS
-    if (auth()->user()->role !== 'staff') {
-
-        return redirect()->route('dashboard');
-
-    }
-
-    return view('staff.dashboard');
-
-})->middleware(['auth'])->name('staff.dashboard');
 
 /*
 |--------------------------------------------------------------------------
@@ -89,106 +35,189 @@ Route::get('/staff-dashboard', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | PROFILE
+    | DASHBOARD
     |--------------------------------------------------------------------------
     */
 
-    Route::get('/profile', [ProfileController::class, 'edit'])
-        ->name('profile.edit');
+    Route::get('/dashboard', function () {
 
-    Route::patch('/profile', [ProfileController::class, 'update'])
-        ->name('profile.update');
+        $totalProperties = Property::count();
 
-    Route::delete('/profile', [ProfileController::class, 'destroy'])
-        ->name('profile.destroy');
+        $availableProperties = Property::where(
+            'status',
+            'Available'
+        )->count();
+
+        $rentedProperties = Property::where(
+            'status',
+            'Rented'
+        )->count();
+
+        $totalTenants = Tenant::count();
+
+        $totalRevenue = Payment::sum('amount');
+
+        $monthlyRevenue = Payment::whereMonth(
+            'payment_date',
+            now()->month
+        )->sum('amount');
+
+        return view('dashboard', compact(
+            'totalProperties',
+            'availableProperties',
+            'rentedProperties',
+            'totalTenants',
+            'totalRevenue',
+            'monthlyRevenue'
+        ));
+
+    })->name('dashboard');
 
     /*
     |--------------------------------------------------------------------------
-    | PROPERTIES
+    | ADMIN ONLY ROUTES
     |--------------------------------------------------------------------------
     */
 
-    Route::resource('properties', PropertyController::class);
+    Route::middleware('role:admin')->group(function () {
+
+        /*
+        |--------------------------------------------------------------------------
+        | REPORTS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/reports',
+            [ReportController::class, 'index']
+        )->name('reports.index');
+
+        /*
+        |--------------------------------------------------------------------------
+        | OWNERS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource(
+            'owners',
+            OwnerController::class
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | BRANCHES
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource(
+            'branches',
+            BranchController::class
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | STAFF MANAGEMENT
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource(
+            'staff',
+            StaffController::class
+        );
+
+        Route::patch(
+            '/staff/{id}/salary',
+            [StaffController::class, 'updateSalary']
+        )->name('staff.updateSalary');
+
+    });
 
     /*
     |--------------------------------------------------------------------------
-    | OWNERS
+    | ADMIN + STAFF ROUTES
     |--------------------------------------------------------------------------
     */
 
-    Route::resource('owners', OwnerController::class);
+    Route::middleware('role:admin,staff')->group(function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | BRANCHES
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | PROPERTIES
+        |--------------------------------------------------------------------------
+        */
 
-    Route::resource('branches', BranchController::class);
+        Route::resource(
+            'properties',
+            PropertyController::class
+        );
 
-    /*
-    |--------------------------------------------------------------------------
-    | STAFF
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | TENANTS
+        |--------------------------------------------------------------------------
+        */
 
-    Route::resource('staff', StaffController::class);
+        Route::resource(
+            'tenants',
+            TenantController::class
+        );
 
-    // UPDATE STAFF SALARY
-    Route::patch(
-        '/staff/{id}/salary',
-        [StaffController::class, 'updateSalary']
-    )->name('staff.updateSalary');
+        /*
+        |--------------------------------------------------------------------------
+        | PROPERTY VIEWINGS
+        |--------------------------------------------------------------------------
+        */
 
-    /*
-    |--------------------------------------------------------------------------
-    | TENANTS
-    |--------------------------------------------------------------------------
-    */
+        Route::resource(
+            'property-viewings',
+            PropertyViewingController::class
+        );
 
-    Route::resource('tenants', TenantController::class);
+        /*
+        |--------------------------------------------------------------------------
+        | FEEDBACK
+        |--------------------------------------------------------------------------
+        */
 
-    /*
-    |--------------------------------------------------------------------------
-    | PAYMENTS
-    |--------------------------------------------------------------------------
-    */
+        Route::resource(
+            'feedback',
+            FeedbackController::class
+        );
 
-    Route::resource('payments', PaymentController::class);
+        /*
+        |--------------------------------------------------------------------------
+        | LEASE AGREEMENTS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource(
+            'lease-agreements',
+            LeaseAgreementController::class
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | PAYMENTS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource(
+            'payments',
+            PaymentController::class
+        );
+
+    });
 
 });
 
 /*
 |--------------------------------------------------------------------------
-| ADMIN ONLY ROUTES
+| AUTH ROUTES
 |--------------------------------------------------------------------------
 */
-
-Route::middleware(['auth'])->group(function () {
-
-    /*
-    |--------------------------------------------------------------------------
-    | REPORTS
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('/reports', function () {
-
-        // ONLY ADMIN CAN ACCESS REPORTS
-        if (auth()->user()->role !== 'admin') {
-
-            abort(403);
-
-        }
-
-        return app(ReportController::class)->index();
-
-    })->name('reports.index');
-
-});
 
 require __DIR__.'/auth.php';

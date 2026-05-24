@@ -33,6 +33,15 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+
+            'tenant_id' => 'required|exists:tenants,id',
+            'amount' => 'required|numeric',
+            'payment_date' => 'required|date',
+            'status' => 'required'
+
+        ]);
+
         Payment::create([
 
             'tenant_id' => $request->tenant_id,
@@ -62,6 +71,15 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
+        $request->validate([
+
+            'tenant_id' => 'required|exists:tenants,id',
+            'amount' => 'required|numeric',
+            'payment_date' => 'required|date',
+            'status' => 'required'
+
+        ]);
+
         $payment->update([
 
             'tenant_id' => $request->tenant_id,

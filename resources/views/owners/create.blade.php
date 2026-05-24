@@ -1,12 +1,25 @@
 @extends('layouts.app')
 
+@section('page_title', 'Add Owner')
+@section('page_subtitle', 'Create a new property owner')
+@section('breadcrumbs')
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+        <a href="{{ route('owners.index') }}" class="hover:text-slate-900">Owners</a>
+        <span>/</span>
+        <span>Add Owner</span>
+    </div>
+@endsection
+
+@section('header_actions')
+    <a href="{{ route('owners.index') }}"
+       class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-5 py-3 rounded-2xl transition font-semibold">
+        Back
+    </a>
+@endsection
+
 @section('content')
 
-<div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
-
-    <h1 class="text-4xl font-bold mb-8">
-        Add Owner
-    </h1>
+<div class="max-w-2xl mx-auto bg-white border border-slate-200 p-8 rounded-2xl shadow-sm">
 
     <form method="POST"
           action="{{ route('owners.store') }}">
@@ -73,14 +86,14 @@
         <div class="flex gap-4">
 
             <button type="submit"
-                    class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg shadow">
+                    class="inline-flex items-center justify-center rounded-2xl bg-cyan-600 px-6 py-3 text-white font-semibold shadow-lg transition hover:bg-cyan-700">
 
                 Save Owner
 
             </button>
 
             <a href="{{ route('owners.index') }}"
-               class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg shadow">
+               class="inline-flex items-center justify-center rounded-2xl bg-slate-500 px-6 py-3 text-white font-semibold shadow-sm transition hover:bg-slate-600">
 
                 Cancel
 

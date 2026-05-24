@@ -12,9 +12,15 @@ class ReportController extends Controller
     {
         $totalProperties = Property::count();
 
-        $availableProperties = Property::where('status', 'Available')->count();
+        $availableProperties = Property::where(
+            'status',
+            'Available'
+        )->count();
 
-        $rentedProperties = Property::where('status', 'Rented')->count();
+        $rentedProperties = Property::where(
+            'status',
+            'Rented'
+        )->count();
 
         $totalTenants = Tenant::count();
 
