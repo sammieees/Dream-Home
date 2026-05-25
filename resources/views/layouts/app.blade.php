@@ -204,6 +204,18 @@
 
                 </a>
 
+                <!-- LEASE AGREEMENTS -->
+                <a href="{{ route('leases.index') }}"
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cyan-500 transition">
+
+                    <span>📄</span>
+
+                    <span>
+                        Lease Agreements
+                    </span>
+
+                </a>
+
             </div>
 
         </div>

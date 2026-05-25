@@ -10,7 +10,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\StaffController;
-
+use App\Http\Controllers\LeaseController;
 use App\Models\Property;
 use App\Models\Payment;
 use App\Models\Tenant;
@@ -188,6 +188,8 @@ Route::middleware(['auth'])->group(function () {
         return app(ReportController::class)->index();
 
     })->name('reports.index');
+
+    Route::resource('leases', LeaseController::class)->except(['show']);
 
 });
 
