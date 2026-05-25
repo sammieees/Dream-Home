@@ -120,8 +120,8 @@ http://127.0.0.1:8000
 ### Admin Account
 
 ```txt
-Email:    nicole@gmail.com
-Password: password123
+Email:    kent@gmail.com
+Password: kentoy123
 ```
 
 ---
@@ -191,86 +191,6 @@ Railway - https://railway.appi
 
 ---
 
-## Screenshots
-
-### Login Page
-
-![Login Page](Screenshots/login.png)
-
----
-
-### Dashboard
-
-![Dashboard](Screenshots/dashboard.png)
-
----
-
-### User Management
-
-![User Management](Screenshots/users.png)
-
----
-
-### Add New User
-
-![Add New User](Screenshots/users_create.png)
-
----
-
-### Client & Registration Module
-
-![Clients](Screenshots/clients.png)
-
----
-
-### Add New Client
-
-![Add New Client](Screenshots/clients_create.png)
-
----
-
-### Edit Client
-
-![Edit Client](Screenshots/clients_edit.png)
-
----
-
-### Property Module
-
-![Properties](Screenshots/properties.png)
-
----
-
-### Add New Property
-
-![Add New Property](Screenshots/properties_create.png)
-
----
-
-### Staff & Branch Module
-
-![Staff](Screenshots/staff.png)
-
----
-
-### Rentals & Viewing Module
-
-![Rentals](Screenshots/rentals.png)
-
----
-
-### Payments & Reports Module
-
-![Payments](Screenshots/payments.png)
-
----
-
-### Database Tables
-
-![Database](Screenshots/database.png)
-
-
----
 
 ## Notes
 
