@@ -65,7 +65,8 @@ class TenantController extends Controller
 
             'contact' => 'required|string|max:20',
 
-            'property_id' => 'required|exists:properties,id',
+            // PROPERTY OPTIONAL
+            'property_id' => 'nullable|exists:properties,id',
 
             'staff_id' => 'nullable|exists:users,id',
 
@@ -95,12 +96,15 @@ class TenantController extends Controller
         ]);
 
         // AUTO UPDATE PROPERTY STATUS
-        Property::find($request->property_id)
-                ->update([
+        if ($request->property_id) {
 
-                    'status' => 'Rented'
+            Property::find($request->property_id)
+                    ->update([
 
-                ]);
+                        'status' => 'Rented'
+
+                    ]);
+        }
 
         return redirect()
                 ->route('tenants.index')
@@ -156,7 +160,8 @@ class TenantController extends Controller
 
             'contact' => 'required|string|max:20',
 
-            'property_id' => 'required|exists:properties,id',
+            // PROPERTY OPTIONAL
+            'property_id' => 'nullable|exists:properties,id',
 
             'staff_id' => 'nullable|exists:users,id',
 

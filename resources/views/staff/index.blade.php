@@ -103,28 +103,51 @@
                     <!-- ACTION -->
                     <td class="p-5">
 
-                        <form action="{{ route('staff.updateSalary', $user->id) }}"
-                              method="POST"
-                              class="flex items-center gap-2">
+                        <div class="flex items-center gap-2">
 
-                            @csrf
-                            @method('PATCH')
+                            {{-- UPDATE SALARY --}}
+                            <form action="{{ route('staff.updateSalary', $user->id) }}"
+                                  method="POST"
+                                  class="flex items-center gap-2">
 
-                            <input type="number"
-                                   step="0.01"
-                                   name="salary"
-                                   value="{{ $user->salary }}"
-                                   placeholder="Enter salary"
-                                   class="border border-gray-300 rounded-xl px-3 py-2 w-40 focus:ring focus:ring-blue-200">
+                                @csrf
+                                @method('PATCH')
 
-                            <button type="submit"
-                                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl shadow transition">
+                                <input type="number"
+                                       step="0.01"
+                                       name="salary"
+                                       value="{{ $user->salary }}"
+                                       placeholder="Enter salary"
+                                       class="border border-gray-300 rounded-xl px-3 py-2 w-40 focus:ring focus:ring-blue-200">
 
-                                Save
+                                <button type="submit"
+                                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl shadow transition">
 
-                            </button>
+                                    Save
 
-                        </form>
+                                </button>
+
+                            </form>
+
+                            {{-- DELETE STAFF --}}
+                            <form action="{{ route('staff.destroy', $user->id) }}"
+                                  method="POST"
+                                  onsubmit="return confirm('Are you sure you want to delete this user?')"
+                                  class="inline-block">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit"
+                                        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl shadow transition">
+
+                                    Delete
+
+                                </button>
+
+                            </form>
+
+                        </div>
 
                     </td>
 
