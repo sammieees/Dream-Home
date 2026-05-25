@@ -17,7 +17,7 @@ use App\Models\Tenant;
 
 Route::get('/', function () {
 
-    return view('welcome');
+    return redirect('/login');
 
 });
 
