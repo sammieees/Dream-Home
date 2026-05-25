@@ -14,7 +14,9 @@
         @csrf
         @method('PUT')
 
+        {{-- Name --}}
         <div class="mb-5">
+
             <label class="block mb-2 font-semibold">
                 Name
             </label>
@@ -23,9 +25,12 @@
                    name="name"
                    value="{{ $tenant->name }}"
                    class="w-full border rounded-xl p-3">
+
         </div>
 
+        {{-- Email --}}
         <div class="mb-5">
+
             <label class="block mb-2 font-semibold">
                 Email
             </label>
@@ -34,9 +39,12 @@
                    name="email"
                    value="{{ $tenant->email }}"
                    class="w-full border rounded-xl p-3">
+
         </div>
 
+        {{-- Contact --}}
         <div class="mb-5">
+
             <label class="block mb-2 font-semibold">
                 Contact
             </label>
@@ -45,9 +53,12 @@
                    name="contact"
                    value="{{ $tenant->contact }}"
                    class="w-full border rounded-xl p-3">
+
         </div>
 
+        {{-- Start Date --}}
         <div class="mb-5">
+
             <label class="block mb-2 font-semibold">
                 Start Date
             </label>
@@ -56,6 +67,36 @@
                    name="start_date"
                    value="{{ $tenant->start_date }}"
                    class="w-full border rounded-xl p-3">
+
+        </div>
+
+        {{-- Assign Staff --}}
+        <div class="mb-5">
+
+            <label class="block mb-2 font-semibold">
+                Assign Staff
+            </label>
+
+            <select name="staff_id"
+                    class="w-full border rounded-xl p-3">
+
+                <option value="">
+                    Select Staff
+                </option>
+
+                @foreach($staff as $member)
+
+                    <option value="{{ $member->id }}"
+                        {{ $tenant->staff_id == $member->id ? 'selected' : '' }}>
+
+                        {{ $member->name }}
+
+                    </option>
+
+                @endforeach
+
+            </select>
+
         </div>
 
         <button type="submit"

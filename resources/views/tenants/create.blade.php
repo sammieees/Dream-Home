@@ -2,214 +2,171 @@
 
 @section('content')
 
-<div class="max-w-3xl mx-auto">
+<div class="max-w-3xl mx-auto bg-white p-8 rounded-3xl shadow-xl">
 
-    <!-- HEADER -->
-    <div class="mb-8">
+    <h1 class="text-3xl font-bold mb-6">
+        Edit Tenant
+    </h1>
 
-        <h1 class="text-4xl font-bold text-gray-800">
-            Add Tenant
-        </h1>
+    <form action="{{ route('tenants.update', $tenant) }}"
+          method="POST">
 
-        <p class="text-gray-500 mt-2">
-            Register a new tenant into the rental system
-        </p>
+        @csrf
+        @method('PUT')
 
-    </div>
+        {{-- Name --}}
+        <div class="mb-5">
 
-    <!-- FORM CARD -->
-    <div class="bg-white rounded-3xl shadow-xl p-8">
+            <label class="block mb-2 font-semibold">
+                Name
+            </label>
 
-        <form method="POST"
-              action="{{ route('tenants.store') }}"
-              onsubmit="disableButton()">
+            <input type="text"
+                   name="name"
+                   value="{{ $tenant->name }}"
+                   class="w-full border rounded-xl p-3">
 
-            @csrf
+        </div>
 
-            <!-- NAME -->
-            <div class="mb-6">
+        {{-- Email --}}
+        <div class="mb-5">
 
-                <label class="block text-gray-700 font-semibold mb-2">
-                    Tenant Name
-                </label>
+            <label class="block mb-2 font-semibold">
+                Email
+            </label>
 
-                <input type="text"
-                       name="name"
-                       required
-                       placeholder="Enter tenant name"
-                       class="w-full border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <input type="email"
+                   name="email"
+                   value="{{ $tenant->email }}"
+                   class="w-full border rounded-xl p-3">
 
-            </div>
+        </div>
 
-            <!-- EMAIL -->
-            <div class="mb-6">
+        {{-- Contact --}}
+        <div class="mb-5">
 
-                <label class="block text-gray-700 font-semibold mb-2">
-                    Email
-                </label>
+            <label class="block mb-2 font-semibold">
+                Contact
+            </label>
 
-                <input type="email"
-                       name="email"
-                       required
-                       placeholder="Enter email"
-                       class="w-full border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <input type="text"
+                   name="contact"
+                   value="{{ $tenant->contact }}"
+                   class="w-full border rounded-xl p-3">
 
-            </div>
+        </div>
 
-            <!-- CONTACT -->
-            <div class="mb-6">
+        {{-- Property --}}
+        <div class="mb-5">
 
-                <label class="block text-gray-700 font-semibold mb-2">
-                    Contact Number
-                </label>
+            <label class="block mb-2 font-semibold">
+                Property
+            </label>
 
-                <input type="text"
-                       name="contact"
-                       required
-                       placeholder="Enter contact number"
-                       class="w-full border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <select name="property_id"
+                    class="w-full border rounded-xl p-3">
 
-            </div>
-
-            <!-- PROPERTY -->
-            <div class="mb-6">
-
-                <label class="block text-gray-700 font-semibold mb-2">
+                <option value="">
                     Select Property
-                </label>
+                </option>
 
-                <select name="property_id"
-                        required
-                        class="w-full border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                @foreach($properties as $property)
 
-                    <option value="">
-                        Choose Property
+                    <option value="{{ $property->id }}"
+                        {{ $tenant->property_id == $property->id ? 'selected' : '' }}>
+
+                        {{ $property->title }}
+                        - ₱{{ number_format($property->rent, 2) }}
+
                     </option>
 
-                    @foreach($properties as $property)
+                @endforeach
 
-                        <option value="{{ $property->id }}">
+            </select>
 
-                            {{ $property->title }}
-                            - ₱{{ number_format($property->rent, 2) }}
+        </div>
 
-                        </option>
+        {{-- Assign Staff --}}
+        <div class="mb-5">
 
-                    @endforeach
+            <label class="block mb-2 font-semibold">
+                Assign Staff
+            </label>
 
-                </select>
+            <select name="staff_id"
+                    class="w-full border rounded-xl p-3">
 
-            </div>
+                <option value="">
+                    Select Staff
+                </option>
 
-            <!-- ASSIGNED STAFF -->
-            <div class="mb-6">
+                @foreach($staff as $member)
 
-                <label class="block text-gray-700 font-semibold mb-2">
-                    Assign Staff
-                </label>
+                    <option value="{{ $member->id }}"
+                        {{ $tenant->staff_id == $member->id ? 'selected' : '' }}>
 
-                <select name="staff_id"
-                        class="w-full border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        {{ $member->name }}
 
-                    <option value="">
-                        Select Staff
                     </option>
 
-                    @foreach($staff as $user)
+                @endforeach
 
-                        <option value="{{ $user->id }}">
+            </select>
 
-                            {{ $user->name }}
+        </div>
 
-                        </option>
+        {{-- Branch --}}
+        <div class="mb-5">
 
-                    @endforeach
+            <label class="block mb-2 font-semibold">
+                Branch
+            </label>
 
-                </select>
+            <select name="branch_id"
+                    class="w-full border rounded-xl p-3">
 
-            </div>
+                <option value="">
+                    Select Branch
+                </option>
 
-            <!-- ASSIGNED BRANCH -->
-            <div class="mb-6">
+                @foreach($branches as $branch)
 
-                <label class="block text-gray-700 font-semibold mb-2">
-                    Assign Branch
-                </label>
+                    <option value="{{ $branch->id }}"
+                        {{ $tenant->branch_id == $branch->id ? 'selected' : '' }}>
 
-                <select name="branch_id"
-                        class="w-full border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        {{ $branch->name }}
 
-                    <option value="">
-                        Select Branch
                     </option>
 
-                    @foreach($branches as $branch)
+                @endforeach
 
-                        <option value="{{ $branch->id }}">
+            </select>
 
-                            {{ $branch->name }}
+        </div>
 
-                        </option>
+        {{-- Start Date --}}
+        <div class="mb-5">
 
-                    @endforeach
+            <label class="block mb-2 font-semibold">
+                Start Date
+            </label>
 
-                </select>
+            <input type="date"
+                   name="start_date"
+                   value="{{ $tenant->start_date }}"
+                   class="w-full border rounded-xl p-3">
 
-            </div>
+        </div>
 
-            <!-- START DATE -->
-            <div class="mb-8">
+        <button type="submit"
+                class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl">
 
-                <label class="block text-gray-700 font-semibold mb-2">
-                    Start Date
-                </label>
+            Update Tenant
 
-                <input type="date"
-                       name="start_date"
-                       required
-                       class="w-full border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </button>
 
-            </div>
-
-            <!-- BUTTONS -->
-            <div class="flex gap-4">
-
-                <!-- SAVE BUTTON -->
-                <button type="submit"
-                        id="submitBtn"
-                        class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-2xl shadow-lg transition">
-
-                    Save Tenant
-
-                </button>
-
-                <!-- CANCEL BUTTON -->
-                <a href="{{ route('tenants.index') }}"
-                   class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-2xl shadow-lg transition">
-
-                    Cancel
-
-                </a>
-
-            </div>
-
-        </form>
-
-    </div>
+    </form>
 
 </div>
-
-<script>
-
-    function disableButton() {
-
-        let btn = document.getElementById('submitBtn');
-
-        btn.disabled = true;
-
-        btn.innerHTML = 'Saving...';
-    }
-
-</script>
 
 @endsection
