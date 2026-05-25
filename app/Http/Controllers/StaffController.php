@@ -82,8 +82,14 @@ class StaffController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
+    
     {
-        //
-    }
+    $staff = User::findOrFail($id);
+
+    $staff->delete();
+
+    return redirect()->route('staff.index')
+        ->with('success', 'Staff deleted successfully.');
+}
 }
