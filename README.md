@@ -143,26 +143,11 @@ Production: Railway MySQL
 |---|---|
 | Branch | Stores branch office details |
 | Staff | Stores staff information and roles |
-| NextOfKin | Stores next of kin details for staff |
-| PropertyForRent | Stores property listings |
-| Renter | Stores client/renter information |
+| Properties | Stores lists of properties |
+| Tenant | Stores tenant information |
 | Lease | Stores lease agreements |
-| Inspection | Stores property inspection records |
-| Newspaper | Stores newspaper names for adverts |
-| Advert | Stores property advertisements |
-| Viewing | Stores property viewing records |
 | Payment | Stores payment records |
 | users | Stores system login accounts and roles |
-
----
-
-### Database Triggers
-
-| Trigger | Purpose |
-|---|---|
-| prevent_lease_delete | Prevents deletion of lease records within 3 years of expiry |
-| prevent_property_delete | Prevents deletion of property records within 3 years of withdrawal |
-
 
 ---
 
@@ -180,10 +165,10 @@ Production: Railway MySQL
 
 | Module | Description | Assigned Developer |
 |---|---|---|
-| Module 1 | Property & Owner Management | Ricky Mark S. Pareja |
-| Module 2 | Client & Registration | Jayson Rey Digang |
-| Module 3 | Staff & Branch Management | Chien Maureen M. Enot |
-| Module 4 | Rental & Viewing Management | Sirelle Timothy Mayon |
+| Module 1 | Property & Owner Management | Rishalenn Q. Pelarija |
+| Module 2 | Client & Registration | Samantha Nicole E. Bogo |
+| Module 3 | Staff & Branch Management | Samantha S. Calunsag |
+| Module 4 | Rental & Viewing Management | Ian Kent A. Bris |
 
 
 ---
@@ -193,7 +178,7 @@ Production: Railway MySQL
 ### Live URL
 
 ```txt
-https://dreamhome-production.up.railway.app
+https://dream-home-production-bd07.up.railway.app
 ```
 
 ---
