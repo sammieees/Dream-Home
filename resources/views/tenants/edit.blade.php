@@ -23,7 +23,7 @@
 
             <input type="text"
                    name="name"
-                   value="{{ $tenant->name }}"
+                   value="{{ old('name', $tenant->name) }}"
                    class="w-full border rounded-xl p-3">
 
         </div>
@@ -37,7 +37,7 @@
 
             <input type="email"
                    name="email"
-                   value="{{ $tenant->email }}"
+                   value="{{ old('email', $tenant->email) }}"
                    class="w-full border rounded-xl p-3">
 
         </div>
@@ -51,22 +51,37 @@
 
             <input type="text"
                    name="contact"
-                   value="{{ $tenant->contact }}"
+                   value="{{ old('contact', $tenant->contact) }}"
                    class="w-full border rounded-xl p-3">
 
         </div>
 
-        {{-- Start Date --}}
+        {{-- Property --}}
         <div class="mb-5">
 
             <label class="block mb-2 font-semibold">
-                Start Date
+                Property
             </label>
 
-            <input type="date"
-                   name="start_date"
-                   value="{{ $tenant->start_date }}"
-                   class="w-full border rounded-xl p-3">
+            <select name="property_id"
+                    class="w-full border rounded-xl p-3">
+
+                <option value="">
+                    Select Property
+                </option>
+
+                @foreach($properties as $property)
+
+                    <option value="{{ $property->id }}"
+                        {{ $tenant->property_id == $property->id ? 'selected' : '' }}>
+
+                        {{ $property->title }}
+
+                    </option>
+
+                @endforeach
+
+            </select>
 
         </div>
 
@@ -96,6 +111,49 @@
                 @endforeach
 
             </select>
+
+        </div>
+
+        {{-- Branch --}}
+        <div class="mb-5">
+
+            <label class="block mb-2 font-semibold">
+                Branch
+            </label>
+
+            <select name="branch_id"
+                    class="w-full border rounded-xl p-3">
+
+                <option value="">
+                    Select Branch
+                </option>
+
+                @foreach($branches as $branch)
+
+                    <option value="{{ $branch->id }}"
+                        {{ $tenant->branch_id == $branch->id ? 'selected' : '' }}>
+
+                        {{ $branch->name }}
+
+                    </option>
+
+                @endforeach
+
+            </select>
+
+        </div>
+
+        {{-- Start Date --}}
+        <div class="mb-5">
+
+            <label class="block mb-2 font-semibold">
+                Start Date
+            </label>
+
+            <input type="date"
+                   name="start_date"
+                   value="{{ old('start_date', $tenant->start_date) }}"
+                   class="w-full border rounded-xl p-3">
 
         </div>
 

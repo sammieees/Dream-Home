@@ -5,14 +5,13 @@
 <div class="max-w-3xl mx-auto bg-white p-8 rounded-3xl shadow-xl">
 
     <h1 class="text-3xl font-bold mb-6">
-        Edit Tenant
+        Add Tenant
     </h1>
 
-    <form action="{{ route('tenants.update', $tenant) }}"
+    <form action="{{ route('tenants.store') }}"
           method="POST">
 
         @csrf
-        @method('PUT')
 
         {{-- Name --}}
         <div class="mb-5">
@@ -23,7 +22,7 @@
 
             <input type="text"
                    name="name"
-                   value="{{ $tenant->name }}"
+                   value="{{ old('name') }}"
                    class="w-full border rounded-xl p-3">
 
         </div>
@@ -37,7 +36,7 @@
 
             <input type="email"
                    name="email"
-                   value="{{ $tenant->email }}"
+                   value="{{ old('email') }}"
                    class="w-full border rounded-xl p-3">
 
         </div>
@@ -51,7 +50,7 @@
 
             <input type="text"
                    name="contact"
-                   value="{{ $tenant->contact }}"
+                   value="{{ old('contact') }}"
                    class="w-full border rounded-xl p-3">
 
         </div>
@@ -72,8 +71,7 @@
 
                 @foreach($properties as $property)
 
-                    <option value="{{ $property->id }}"
-                        {{ $tenant->property_id == $property->id ? 'selected' : '' }}>
+                    <option value="{{ $property->id }}">
 
                         {{ $property->title }}
                         - ₱{{ number_format($property->rent, 2) }}
@@ -102,8 +100,7 @@
 
                 @foreach($staff as $member)
 
-                    <option value="{{ $member->id }}"
-                        {{ $tenant->staff_id == $member->id ? 'selected' : '' }}>
+                    <option value="{{ $member->id }}">
 
                         {{ $member->name }}
 
@@ -131,8 +128,7 @@
 
                 @foreach($branches as $branch)
 
-                    <option value="{{ $branch->id }}"
-                        {{ $tenant->branch_id == $branch->id ? 'selected' : '' }}>
+                    <option value="{{ $branch->id }}">
 
                         {{ $branch->name }}
 
@@ -153,7 +149,7 @@
 
             <input type="date"
                    name="start_date"
-                   value="{{ $tenant->start_date }}"
+                   value="{{ old('start_date') }}"
                    class="w-full border rounded-xl p-3">
 
         </div>
@@ -161,7 +157,7 @@
         <button type="submit"
                 class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl">
 
-            Update Tenant
+            Add Tenant
 
         </button>
 
