@@ -14,4 +14,11 @@ class Owner extends Model
         'address'
 
     ];
+
+    public function properties()
+{
+    return $this->hasMany(Property::class);
+}
+
+
 }

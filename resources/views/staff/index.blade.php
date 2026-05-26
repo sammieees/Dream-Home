@@ -10,11 +10,19 @@
             Staff Management
         </h1>
 
-        <p class="text-gray-500 mt-1">
+        <p class="text-gray-500 mt-2">
             Manage staff salaries and assignments
         </p>
 
     </div>
+
+    <!-- ADD STAFF BUTTON -->
+    <a href="{{ route('staff.create') }}"
+       class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-2xl shadow-lg transition">
+
+        + Add Staff
+
+    </a>
 
 </div>
 
@@ -34,141 +42,152 @@
 
         <thead class="bg-gray-100">
 
-            <tr>
+<tr>
 
-                <th class="text-left p-5">Name</th>
+    <th class="text-left p-5">Name</th>
+    <th class="text-left p-5">Email</th>
+    <th class="text-left p-5">Role</th>
+    <th class="text-left p-5">Salary</th>
+    <th class="text-left p-5">Branch</th>
+    <th class="text-left p-5">Responsibility</th>
+    <th class="text-left p-5">Action</th>
 
-                <th class="text-left p-5">Email</th>
+</tr>
 
-                <th class="text-left p-5">Role</th>
-
-                <th class="text-left p-5">Salary</th>
-
-                <th class="text-left p-5">Action</th>
-
-            </tr>
+</thead>
 
         </thead>
 
         <tbody>
 
-            @forelse($staff as $user)
+           <tbody>
 
-                <tr class="border-t hover:bg-gray-50 transition">
+         @forelse($staffs as $user)
 
-                    <!-- NAME -->
-                    <td class="p-5 font-semibold">
+        <tr class="border-t hover:bg-gray-50 transition">
 
-                        {{ $user->name }}
+        <!-- NAME -->
+        <td class="p-5 font-semibold">
+            {{ $user->name }}
+        </td>
 
-                    </td>
+        <!-- EMAIL -->
+        <td class="p-5">
+             {{ $user->email }}
+        </td>
 
-                    <!-- EMAIL -->
-                    <td class="p-5">
+         <!-- ROLE -->
+        <td class="p-5">
+             {{ ucfirst($user->role) }}
+         </td>
 
-                        {{ $user->email }}
+    <!-- SALARY -->
+    <td class="p-5 text-green-600 font-semibold">
 
-                    </td>
+        @if($user->salary)
 
-                    <!-- ROLE -->
-                    <td class="p-5">
+            ₱{{ number_format($user->salary, 2) }}
 
-                        {{ ucfirst($user->role) }}
+        @else
 
-                    </td>
+            Not Assigned
 
-                    <!-- SALARY -->
-                    <td class="p-5">
+        @endif
 
-                        @if($user->salary)
+    </td>
 
-                            <span class="text-green-600 font-bold">
+    <!-- BRANCH -->
+<td class="p-5">
 
-                                ₱{{ number_format($user->salary, 2) }}
+    {{ $user->branch->name ?? 'No Branch' }}
 
-                            </span>
+</td>
 
-                        @else
+<!-- RESPONSIBILITY -->
+<td class="p-5">
 
-                            <span class="text-red-500 font-semibold">
+    {{ $user->responsibility ?? 'N/A' }}
 
-                                Not Assigned
+</td>
 
-                            </span>
+        <!-- ACTION -->
+    <td class="p-5">
 
-                        @endif
+    <div class="flex gap-2">
 
-                    </td>
+        <!-- SAVE SALARY -->
+        <form action="{{ route('staff.salary.update', $user->id) }}"
+      method="POST"
+      class="flex gap-2">
 
-                    <!-- ACTION -->
-                    <td class="p-5">
+    @csrf
+    @method('PUT')
 
-                        <div class="flex items-center gap-2">
+    <input type="number"
+           step="0.01"
+           name="salary"
+           value="{{ $user->salary }}"
+           placeholder="Enter salary"
+           class="border rounded-xl px-3 py-2 w-36">
 
-                            {{-- UPDATE SALARY --}}
-                            <form action="{{ route('staff.updateSalary', $user->id) }}"
-                                  method="POST"
-                                  class="flex items-center gap-2">
+    <button type="submit"
+            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl">
 
-                                @csrf
-                                @method('PATCH')
+        Save
 
-                                <input type="number"
-                                       step="0.01"
-                                       name="salary"
-                                       value="{{ $user->salary }}"
-                                       placeholder="Enter salary"
-                                       class="border border-gray-300 rounded-xl px-3 py-2 w-40 focus:ring focus:ring-blue-200">
+    </button>
 
-                                <button type="submit"
-                                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl shadow transition">
+    </form>
 
-                                    Save
+        <div class="flex gap-2">
 
-                                </button>
+    <!-- EDIT -->
+    <a href="{{ route('staff.edit', $user->id) }}"
+       class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl">
 
-                            </form>
+        Edit
 
-                            {{-- DELETE STAFF --}}
-                            <form action="{{ route('staff.destroy', $user->id) }}"
-                                  method="POST"
-                                  onsubmit="return confirm('Are you sure you want to delete this user?')"
-                                  class="inline-block">
+    </a>
 
-                                @csrf
-                                @method('DELETE')
+        <!-- DELETE -->
+        <form action="{{ route('staff.destroy', $user->id) }}"
+              method="POST">
 
-                                <button type="submit"
-                                        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl shadow transition">
+            @csrf
+            @method('DELETE')
 
-                                    Delete
+            <button type="submit"
+                    onclick="return confirm('Delete this staff?')"
+                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl">
 
-                                </button>
+                Delete
 
-                            </form>
+            </button>
 
-                        </div>
+        </form>
 
-                    </td>
+    </div>
 
-                </tr>
+</td>
 
-            @empty
+</tr>
 
-                <tr>
+@empty
 
-                    <td colspan="5"
-                        class="text-center p-10 text-gray-500">
+<tr>
 
-                        No staff found.
+    <td colspan="7"
+        class="text-center p-10 text-gray-500">
 
-                    </td>
+        No staff found.
 
-                </tr>
+    </td>
 
-            @endforelse
+        </tr>
 
-        </tbody>
+        @endforelse
+
+    </tbody>
 
     </table>
 

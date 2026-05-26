@@ -10,12 +10,16 @@
             Lease Agreements
         </h1>
 
-        <a href="{{ route('leases.create') }}"
-           class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-3 rounded-xl transition">
+        @if(auth()->user()->role === 'admin')
 
-            + Add Lease
+            <a href="{{ route('leases.create') }}"
+               class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-2xl shadow-lg transition">
 
-        </a>
+                + Add Lease
+
+            </a>
+
+        @endif
 
     </div>
 
@@ -55,83 +59,91 @@
 
                 <tr class="border-b hover:bg-gray-50">
 
-                    {{-- Tenant --}}
+                    <!-- Tenant -->
                     <td class="p-4 text-gray-700">
-                        {{ $lease->tenant->name }}
+                        {{ $lease->tenant->name ?? 'No Tenant' }}
                     </td>
 
-                    {{-- Property --}}
+                    <!-- Property -->
                     <td class="p-4 text-gray-700">
-                        {{ $lease->property->property_name }}
+                        {{ $lease->property->title ?? 'No Property' }}
                     </td>
 
-                    {{-- Start Date --}}
+                    <!-- Start Date -->
                     <td class="p-4 text-gray-700">
                         {{ \Carbon\Carbon::parse($lease->start_date)->format('M d, Y') }}
                     </td>
 
-                    {{-- End Date --}}
+                    <!-- End Date -->
                     <td class="p-4 text-gray-700">
                         {{ \Carbon\Carbon::parse($lease->end_date)->format('M d, Y') }}
                     </td>
 
-                    {{-- Monthly Rent --}}
+                    <!-- Monthly Rent -->
                     <td class="p-4 font-semibold text-blue-600">
                         ₱{{ number_format($lease->monthly_rent, 2) }}
                     </td>
 
-                    {{-- Status --}}
+                    <!-- Status -->
                     <td class="p-4">
 
                         @if($lease->status == 'Active')
 
                             <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
-
                                 Active
-
                             </span>
 
                         @else
 
                             <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm font-semibold">
-
                                 Completed
-
                             </span>
 
                         @endif
 
                     </td>
 
-                    {{-- Actions --}}
-                    <td class="p-4">
+                    <!-- Actions -->
+                    <td class="p-4 text-center">
 
-                        <div class="flex gap-2 justify-center">
+                        @if(auth()->user()->role === 'admin')
 
-                            <a href="{{ route('leases.edit', $lease->id) }}"
-                               class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg transition">
+                            <div class="flex gap-2 justify-center">
 
-                                Edit
+                                <!-- EDIT -->
+                                <a href="{{ route('leases.edit', $lease->id) }}"
+                                   class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg transition">
 
-                            </a>
+                                    Edit
 
-                            <form action="{{ route('leases.destroy', $lease->id) }}"
-                                  method="POST"
-                                  onsubmit="return confirm('Delete this lease agreement?')">
+                                </a>
 
-                                @csrf
-                                @method('DELETE')
+                                <!-- DELETE -->
+                                <form action="{{ route('leases.destroy', $lease->id) }}"
+                                      method="POST"
+                                      onsubmit="return confirm('Delete this lease agreement?')">
 
-                                <button type="submit"
-                                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg transition">
+                                    @csrf
+                                    @method('DELETE')
 
-                                    Delete
+                                    <button type="submit"
+                                            class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg transition">
 
-                                </button>
+                                        Delete
 
-                            </form>
+                                    </button>
 
-                        </div>
+                                </form>
+
+                            </div>
+
+                        @else
+
+                            <span class="text-gray-400 italic">
+                                View Only
+                            </span>
+
+                        @endif
 
                     </td>
 

@@ -19,6 +19,7 @@ class Property extends Model
         'image',
         'description',
         'owner_id',
+        'branch_id',
 
     ];
 
@@ -35,12 +36,12 @@ class Property extends Model
      */
     public function owner()
     {
-        return $this->belongsTo(Owner::class);
+    return $this->belongsTo(Owner::class);
     }
 
-    
     public function branch()
     {
-    return $this->belongsTo(Branch::class);
+         return $this->belongsTo(Branch::class);
     }
+
 }

@@ -13,11 +13,13 @@ class LeaseController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $leases = Lease::with('tenant', 'property')->get();
+{
+    $leases = Lease::with(['tenant', 'property'])
+                ->latest()
+                ->get();
 
-        return view('leases.index', compact('leases'));
-    }
+    return view('leases.index', compact('leases'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -37,7 +39,7 @@ class LeaseController extends Controller
     {
         $request->validate([
             'tenant_id' => 'required',
-            'property_id' => 'required',
+            'property_id' => '$request->property_id',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'monthly_rent' => 'required|numeric',

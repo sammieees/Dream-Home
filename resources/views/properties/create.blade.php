@@ -82,6 +82,61 @@
                    class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
 
         </div>
+<!-- OWNER -->
+<div class="mb-6">
+
+    <label class="block text-lg font-semibold mb-2">
+        Owner
+    </label>
+
+    <select name="owner_id"
+            class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+        <option value="">
+            Select Owner
+        </option>
+
+        @foreach($owners as $owner)
+
+            <option value="{{ $owner->id }}">
+
+                {{ $owner->name }}
+
+            </option>
+
+        @endforeach
+
+    </select>
+
+</div>
+
+<!-- BRANCH -->
+<div class="mb-6">
+
+    <label class="block text-lg font-semibold mb-2">
+        Branch
+    </label>
+
+    <select name="branch_id"
+            class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+        <option value="">
+            Select Branch
+        </option>
+
+        @foreach($branches as $branch)
+
+            <option value="{{ $branch->id }}">
+
+                {{ $branch->name }}
+
+            </option>
+
+        @endforeach
+
+    </select>
+
+</div>
 
         <!-- Status -->
         <div class="mb-8">

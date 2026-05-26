@@ -2,94 +2,136 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Branch;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class StaffController extends Controller
 {
     /**
-     * Display staff list.
+     * Display all staff
      */
     public function index()
     {
-        $staff = User::where('role', 'staff')
-            ->orWhere('role', 'admin')
-            ->get();
+        $staffs = User::where('role', 'staff')
+                    ->with('branch')
+                    ->latest()
+                    ->get();
 
-        return view('staff.index', compact('staff'));
+        return view('staff.index', compact('staffs'));
     }
 
     /**
-     * Update salary.
-     */
-    public function updateSalary(Request $request, $id)
-    {
-        $request->validate([
-            'salary' => 'required|numeric|min:0'
-        ]);
-
-        $user = User::findOrFail($id);
-
-        $user->salary = $request->salary;
-
-        $user->save();
-
-        return redirect()
-            ->route('staff.index')
-            ->with('success', 'Salary updated successfully.');
-    }
-
-    /**
-     * Show the form for creating a new resource.
+     * Show create form
      */
     public function create()
     {
-        //
+        $branches = Branch::all();
+
+        return view('staff.create', compact('branches'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store new staff
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'branch_id' => 'nullable|exists:branches,id',
+            'responsibility' => 'nullable|string',
+
+        ]);
+
+        User::create([
+
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'staff',
+            'branch_id' => $request->branch_id,
+            'responsibility' => $request->responsibility,
+
+        ]);
+
+        return redirect()
+            ->route('staff.index')
+            ->with('success', 'Staff created successfully.');
     }
 
     /**
-     * Display the specified resource.
+     * Show edit form
      */
-    public function show(string $id)
+    public function edit(User $staff)
     {
-        //
+        $branches = Branch::all();
+
+        return view('staff.edit', compact('staff', 'branches'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update staff
      */
-    public function edit(string $id)
+    public function update(Request $request, User $staff)
     {
-        //
+        $request->validate([
+
+            'name' => 'required',
+            'email' => 'required|email',
+            'branch_id' => 'nullable|exists:branches,id',
+            'responsibility' => 'nullable|string',
+
+        ]);
+
+        $staff->update([
+
+            'name' => $request->name,
+            'email' => $request->email,
+            'branch_id' => $request->branch_id,
+            'responsibility' => $request->responsibility,
+
+        ]);
+
+        return redirect()
+            ->route('staff.index')
+            ->with('success', 'Staff updated successfully.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+     /**
+        * Update salary
+    */
+        public function updateSalary(Request $request, User $staff)
     {
-        //
-    }
+            $request->validate([
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    
-    {
-    $staff = User::findOrFail($id);
+         'salary' => 'required|numeric|min:0',
 
-    $staff->delete();
+    ]);
 
-    return redirect()->route('staff.index')
-        ->with('success', 'Staff deleted successfully.');
+    $staff->update([
+
+        'salary' => $request->salary,
+
+    ]);
+
+    return redirect()
+        ->route('staff.index')
+        ->with('success', 'Salary updated successfully.');
 }
+
+    /**
+     * Delete staff
+     */
+    public function destroy(User $staff)
+    {
+        $staff->delete();
+
+        return redirect()
+            ->route('staff.index')
+            ->with('success', 'Staff deleted successfully.');
+    }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Owner;
+use App\Models\Branch;
 
 class PropertyController extends Controller
 {
@@ -13,17 +15,19 @@ class PropertyController extends Controller
      */
     public function index(Request $request)
     {
-    $search = $request->search;
+        $search = $request->search;
 
-    $properties = Property::when($search, function ($query, $search) {
+        $properties = Property::with(['owner', 'branch'])
+            ->when($search, function ($query, $search) {
 
-        $query->where('title', 'like', "%{$search}%")
-              ->orWhere('type', 'like', "%{$search}%")
-              ->orWhere('address', 'like', "%{$search}%");
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('type', 'like', "%{$search}%")
+                    ->orWhere('address', 'like', "%{$search}%");
 
-    })->get();
+            })
+            ->get();
 
-    return view('properties.index', compact('properties'));
+        return view('properties.index', compact('properties'));
     }
 
     /**
@@ -31,7 +35,10 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        return view('properties.create');
+        $owners = Owner::all();
+        $branches = Branch::all();
+
+        return view('properties.create', compact('owners', 'branches'));
     }
 
     /**
@@ -47,8 +54,14 @@ class PropertyController extends Controller
             'rent' => 'required|numeric',
             'address' => 'required',
             'status' => 'required',
+
             'description' => 'nullable',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+
+            'owner_id' => 'nullable|exists:owners,id',
+
+            'branch_id' => 'nullable|exists:branches,id'
 
         ]);
 
@@ -58,7 +71,7 @@ class PropertyController extends Controller
         if ($request->hasFile('image')) {
 
             $imagePath = $request->file('image')
-                                 ->store('properties', 'public');
+                ->store('properties', 'public');
         }
 
         // Save property
@@ -69,8 +82,14 @@ class PropertyController extends Controller
             'rent' => $request->rent,
             'address' => $request->address,
             'status' => $request->status,
+
             'description' => $request->description,
-            'image' => $imagePath
+
+            'image' => $imagePath,
+
+            'owner_id' => $request->owner_id,
+
+            'branch_id' => $request->branch_id
 
         ]);
 
@@ -90,10 +109,17 @@ class PropertyController extends Controller
     /**
      * Show edit form
      */
-    public function edit(Property $property)
-    {
-        return view('properties.edit', compact('property'));
-    }
+   public function edit(Property $property)
+{
+    $owners = Owner::all();
+    $branches = Branch::all();
+
+    return view('properties.edit', compact(
+        'property',
+        'owners',
+        'branches'
+    ));
+}
 
     /**
      * Update property
@@ -103,15 +129,17 @@ class PropertyController extends Controller
         // Validation
         $request->validate([
 
-            'title' => 'required',
-            'type' => 'required',
-            'rent' => 'required|numeric',
-            'address' => 'required',
-            'status' => 'required',
-            'description' => 'nullable',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+    'title' => 'required',
+    'type' => 'required',
+    'rent' => 'required|numeric',
+    'address' => 'required',
+    'status' => 'required',
+    'description' => 'nullable',
+    'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    'owner_id' => 'nullable|exists:owners,id',
+    'branch_id' => 'nullable|exists:branches,id'
 
-        ]);
+]);
 
         $imagePath = $property->image;
 
@@ -126,21 +154,23 @@ class PropertyController extends Controller
 
             // Save new image
             $imagePath = $request->file('image')
-                                 ->store('properties', 'public');
+                ->store('properties', 'public');
         }
 
         // Update property
-        $property->update([
+       $property->update([
 
-            'title' => $request->title,
-            'type' => $request->type,
-            'rent' => $request->rent,
-            'address' => $request->address,
-            'status' => $request->status,
-            'description' => $request->description,
-            'image' => $imagePath
+    'title' => $request->title,
+    'type' => $request->type,
+    'rent' => $request->rent,
+    'address' => $request->address,
+    'status' => $request->status,
+    'description' => $request->description,
+    'image' => $imagePath,
+    'owner_id' => $request->owner_id,
+    'branch_id' => $request->branch_id
 
-        ]);
+]);
 
         return redirect()
             ->route('properties.index')

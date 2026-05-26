@@ -149,6 +149,39 @@
 
                 </div>
 
+
+              <!-- OWNER -->
+<div class="mt-3">
+
+    <p class="text-gray-700">
+
+        Owner:
+        <span class="font-semibold">
+
+            {{ $property->owner->name ?? 'No Owner Assigned' }}
+
+        </span>
+
+    </p>
+
+</div>
+
+                <!-- BRANCH -->
+                <div class="mt-2">
+
+                    <p class="text-gray-700">
+
+                         Branch:
+                        <span class="font-semibold">
+
+                            {{ $property->branch->name ?? 'No Branch Assigned' }}
+
+                        </span>
+
+                    </p>
+
+                </div>
+
                 <!-- DESCRIPTION -->
                 <div class="mt-5">
 

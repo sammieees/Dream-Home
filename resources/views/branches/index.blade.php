@@ -48,7 +48,7 @@
                 <th class="text-left p-5">Address</th>
                 <th class="text-left p-5">Contact</th>
                 <th class="text-left p-5">Manager</th>
-
+                <th class="text-left p-5">Actions</th>
             </tr>
 
         </thead>
@@ -77,6 +77,33 @@
 
                     <td class="p-5">
                         {{ $branch->manager }}
+                    </td>
+
+                    <td class="p-5">
+                        <div class="flex gap-3">
+
+                             <a href="{{ route('branches.edit', $branch->id) }}"
+                                 class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl">
+
+                                     Edit
+
+                               </a>
+                            <form action="{{ route('branches.destroy', $branch->id) }}" method="POST">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit"
+                                    onclick="return confirm('Delete this branch?')"
+                                      class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl">
+
+                                      Delete
+
+                               </button>
+
+                            </form>
+
+                        </div>
                     </td>
 
                 </tr>

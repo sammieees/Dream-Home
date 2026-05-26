@@ -25,6 +25,8 @@ class User extends Authenticatable
         'password',
         'role',
         'salary',
+        'branch_id',
+        'responsibility',
 
          ];
 
@@ -50,4 +52,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function branch()
+{
+    return $this->belongsTo(Branch::class);
+}
+
 }

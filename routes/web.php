@@ -190,7 +190,9 @@ Route::middleware(['auth'])->group(function () {
     })->name('reports.index');
 
     Route::resource('leases', LeaseController::class)->except(['show']);
-
+    Route::put('/staff/{staff}/salary', [StaffController::class, 'updateSalary'])
+    ->name('staff.salary.update');
+    
 });
 
 require __DIR__.'/auth.php';

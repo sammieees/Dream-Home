@@ -12,7 +12,9 @@ class OwnerController extends Controller
      */
     public function index()
     {
-        $owners = Owner::latest()->get();
+        $owners = Owner::with('properties.branch')
+            ->latest()
+            ->get();
 
         return view('owners.index', compact('owners'));
     }

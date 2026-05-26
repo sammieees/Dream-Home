@@ -18,6 +18,6 @@ class Branch extends Model
 
     public function properties()
     {
-        return $this->hasMany(Property::class);
+    return $this->hasMany(Property::class);
     }
 }
