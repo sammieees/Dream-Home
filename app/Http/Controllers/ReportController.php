@@ -16,6 +16,8 @@ class ReportController extends Controller
 
         $rentedProperties = Property::where('status', 'Rented')->count();
 
+        $reservedProperties = Property::where('status', 'Reserved')->count();
+
         $totalTenants = Tenant::count();
 
         $totalRevenue = Payment::sum('amount');
@@ -29,6 +31,7 @@ class ReportController extends Controller
             'totalProperties',
             'availableProperties',
             'rentedProperties',
+            'reservedProperties',
             'totalTenants',
             'totalRevenue',
             'monthlyRevenue'

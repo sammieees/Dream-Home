@@ -15,7 +15,7 @@
 </div>
 
 <!-- CARDS -->
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
 
     <!-- TOTAL PROPERTIES -->
     <div class="bg-white p-8 rounded-3xl shadow-xl">
@@ -52,6 +52,19 @@
 
         <p class="text-5xl font-bold mt-4 text-red-500">
             {{ $rentedProperties }}
+        </p>
+
+    </div>
+
+    <!-- RESERVED -->
+    <div class="bg-white p-8 rounded-3xl shadow-xl">
+
+        <h2 class="text-gray-500 text-lg">
+            Reserved Properties
+        </h2>
+
+        <p class="text-5xl font-bold mt-4 text-yellow-500">
+            {{ $reservedProperties }}
         </p>
 
     </div>
@@ -108,7 +121,6 @@
         Compare total and monthly revenue
     </p>
 
-    <!-- FIXED HEIGHT -->
     <div class="h-[400px]">
 
         <canvas id="revenueChart"></canvas>
@@ -125,10 +137,9 @@
     </h2>
 
     <p class="text-gray-500 mb-6">
-        Compare available and rented properties
+        Compare available, rented, and reserved properties
     </p>
 
-    <!-- FIXED HEIGHT -->
     <div class="h-[400px]">
 
         <canvas id="propertyChart"></canvas>
@@ -187,18 +198,21 @@
             data: {
                 labels: [
                     'Available',
-                    'Rented'
+                    'Rented',
+                    'Reserved'
                 ],
 
                 datasets: [{
                     data: [
                         {{ $availableProperties }},
-                        {{ $rentedProperties }}
+                        {{ $rentedProperties }},
+                        {{ $reservedProperties }}
                     ],
 
                     backgroundColor: [
                         '#22c55e',
-                        '#ef4444'
+                        '#ef4444',
+                        '#facc15'
                     ]
                 }]
             },
