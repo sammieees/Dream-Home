@@ -39,7 +39,7 @@ class LeaseController extends Controller
     {
         $request->validate([
             'tenant_id' => 'required',
-            'property_id' => '$request->property_id',
+            'property_id' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'monthly_rent' => 'required|numeric',

@@ -5,15 +5,27 @@
 <div class="max-w-3xl mx-auto">
 
     <!-- HEADER -->
-    <div class="mb-8">
+    <div class="mb-8 flex items-center justify-between">
 
-        <h1 class="text-4xl font-bold text-gray-800">
-            Add Staff
-        </h1>
+        <div>
 
-        <p class="text-gray-500 mt-2">
-            Create a new staff account
-        </p>
+            <h1 class="text-4xl font-bold text-gray-800">
+                Add Staff
+            </h1>
+
+            <p class="text-gray-500 mt-2">
+                Create a new staff account
+            </p>
+
+        </div>
+
+        <!-- BACK BUTTON -->
+        <a href="{{ route('staff.index') }}"
+           class="bg-gray-200 hover:bg-gray-300 px-5 py-3 rounded-2xl transition font-medium">
+
+            ← Back
+
+        </a>
 
     </div>
 
@@ -70,6 +82,20 @@
 
             </div>
 
+            <!-- SALARY -->
+            <div class="mb-6">
+
+                <label class="block text-gray-700 font-semibold mb-2">
+                    Salary
+                </label>
+
+                <input type="number"
+                       name="salary"
+                       placeholder="Enter salary"
+                       class="w-full border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+            </div>
+
             <!-- BRANCH -->
             <div class="mb-6">
 
@@ -103,10 +129,38 @@
                     Responsibility
                 </label>
 
-                <input type="text"
-                       name="responsibility"
-                       placeholder="Enter responsibility"
-                       class="w-full border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <select name="responsibility"
+                        class="w-full border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+                    <option value="">
+                        Select Responsibility
+                    </option>
+
+                    <option value="Handles tenant inquiries and property concerns">
+                        Handles tenant inquiries and property concerns
+                    </option>
+
+                    <option value="Manages property viewings and client assistance">
+                        Manages property viewings and client assistance
+                    </option>
+
+                    <option value="Maintains branch operations and documentation">
+                        Maintains branch operations and documentation
+                    </option>
+
+                    <option value="Processes rental applications and contracts">
+                        Processes rental applications and contracts
+                    </option>
+
+                    <option value="Coordinates property maintenance and inspections">
+                        Coordinates property maintenance and inspections
+                    </option>
+
+                    <option value="Monitors rental payments and tenant records">
+                        Monitors rental payments and tenant records
+                    </option>
+
+                </select>
 
             </div>
 

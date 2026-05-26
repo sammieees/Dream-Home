@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\StaffPerformanceController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\PaymentController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\LeaseController;
+use App\Http\Controllers\PropertyViewingController;
 use App\Models\Property;
 use App\Models\Payment;
 use App\Models\Tenant;
@@ -192,7 +194,17 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('leases', LeaseController::class)->except(['show']);
     Route::put('/staff/{staff}/salary', [StaffController::class, 'updateSalary'])
     ->name('staff.salary.update');
-    
+
+    Route::resource(
+    'property-viewings',
+    PropertyViewingController::class
+    );
+
+    Route::get(
+    '/staff-performance',
+    [StaffPerformanceController::class, 'index']
+    )->name('staff-performance.index');
+
 });
 
 require __DIR__.'/auth.php';

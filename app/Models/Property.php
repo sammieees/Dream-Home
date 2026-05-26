@@ -20,6 +20,7 @@ class Property extends Model
         'description',
         'owner_id',
         'branch_id',
+        'property_id',
 
     ];
 

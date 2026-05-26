@@ -11,14 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('properties', function (Blueprint $table) {
+        // SKIP IF COLUMN ALREADY EXISTS
+        if (!Schema::hasColumn('properties', 'owner_id')) {
 
-            $table->foreignId('owner_id')
-                  ->nullable()
-                  ->constrained()
-                  ->onDelete('set null');
+            Schema::table('properties', function (Blueprint $table) {
 
-        });
+                $table->foreignId('owner_id')
+                      ->nullable()
+                      ->constrained()
+                      ->nullOnDelete();
+
+            });
+
+        }
     }
 
     /**
@@ -26,12 +31,15 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('properties', function (Blueprint $table) {
+        if (Schema::hasColumn('properties', 'owner_id')) {
 
-            $table->dropForeign(['owner_id']);
+            Schema::table('properties', function (Blueprint $table) {
 
-            $table->dropColumn('owner_id');
+                $table->dropForeign(['owner_id']);
+                $table->dropColumn('owner_id');
 
-        });
+            });
+
+        }
     }
 };

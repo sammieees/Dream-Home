@@ -216,6 +216,34 @@
 
                 </a>
 
+                <!-- PROPERTY VIEWINGS -->
+                <a href="{{ route('property-viewings.index') }}"
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cyan-500 transition">
+
+                    <span>🏠</span>
+
+                    <span>
+                        Property Viewings
+                    </span>
+
+                </a>
+
+                <!-- STAFF PERFORMANCE -->
+                @if(auth()->user()->role == 'admin')
+
+                <a href="{{ route('staff-performance.index') }}"
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cyan-500 transition">
+
+                    <span>📊</span>
+
+                    <span>
+                        Staff Performance
+                    </span>
+
+                </a>
+
+                @endif
+
             </div>
 
         </div>
