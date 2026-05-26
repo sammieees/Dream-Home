@@ -122,15 +122,17 @@
 
         </div>
 
-        <!-- REGISTER -->
-        <div class="mt-6 text-center">
+               <!-- REGISTER -->
+        <div class="mt-6 text-center text-sm text-gray-600">
+
+                Don't have an account?
 
             <a href="{{ route('register') }}"
-               class="text-sm text-indigo-600 hover:text-indigo-800">
+                  class="underline text-indigo-600 hover:text-indigo-800 transition">
 
-                Don't have an account? Register here
+                      Register here
 
-            </a>
+             </a>
 
         </div>
 
